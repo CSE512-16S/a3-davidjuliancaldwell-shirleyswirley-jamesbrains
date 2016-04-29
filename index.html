@@ -40,7 +40,7 @@ path {
 var types = {
   asterisk: {m: 12, n1: .3, n2: 0, n3: 10, a: 1, b: 1},
   roundedStar: {m: 5, n1: 2, n2: 7, n3: 7, a: 1, b: 1},
-  cancer: {m: 10, n1: 6, n2: 6, n3: 7, a: 1, b: 1}
+  cancer: {m: 10, n1: 6, n2: 6, n3: 7, a: 1, b: 1, s: 1000}
 };
 
 var startsize = 10000;
@@ -126,6 +126,7 @@ sizecontrol.append("input")
 sizecontrol.append("span")
     .text(function(d) { return format(d.value); });
 
+/*
 d3.select("#controls")
   .append("div")
   .selectAll("button")
@@ -141,11 +142,19 @@ d3.select("#controls")
       }
       path.attr("d", shape);
     });
+*/
 
 function changed(d) {
-  var v = scale.invert(this.value);
-  path.attr("d", shape.param(d.key, v));
-  d3.select(this.nextSibling).text(format(v));
+  if(d.key == "s") {
+    var v = sizescale.invert(this.value);
+    path.attr("d", shape.size(v));
+    d3.select(this.nextSibling).text(format(v));
+  }
+  else {
+    var v = scale.invert(this.value);
+    path.attr("d", shape.param(d.key, v));
+    d3.select(this.nextSibling).text(format(v));
+  }
 }
 
 function changesize(d) {
