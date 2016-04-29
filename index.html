@@ -80,6 +80,16 @@ var sizecontrol = d3.select("#controls")
   .enter().append("div")
     .attr("id", function(d) { return d.key; });
 
+d3.tsv("chemo253.txt", function(c) {return {area: +c.AREA, hormo: +c.HORMO};}, function(d) {
+var pc = d3.parcoords()("#example")
+  .data(d)
+  .render()
+  .createAxes();
+});
+
+sizecontrol.append("label")
+    .text(function(d) { return d.key; });
+
 control.append("label")
     .text(function(d) { return d.key; });
 
@@ -92,6 +102,17 @@ control.append("input")
     .on("input", changed);
 
 control.append("span")
+    .text(function(d) { return format(d.value); });
+
+sizecontrol.append("input")
+    .attr("type", "range")
+    .attr("max", 1000)
+    .attr("min", 0)
+    .property("value", function(d) { return sizescale(d.value); })
+    .on("change", changesize)
+    .on("input", changesize);
+
+sizecontrol.append("span")
     .text(function(d) { return format(d.value); });
 
 d3.select("#controls")
@@ -115,5 +136,12 @@ function changed(d) {
   path.attr("d", shape.param(d.key, v));
   d3.select(this.nextSibling).text(format(v));
 }
+
+function changesize(d) {
+  var v = sizescale.invert(this.value);
+  path.attr("d", shape.size(v));
+  d3.select(this.nextSibling).text(format(v));
+}
+
 
 </script>
