@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<title>Parallel coordinates</title>
+<link rel="stylesheet" type="text/css" href="https://syntagmatic.github.io/parallel-coordinates/d3.parcoords.css">
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://syntagmatic.github.io/parallel-coordinates/d3.parcoords.js"></script>
+<script src="https://syntagmatic.github.io/parallel-coordinates/examples/lib/underscore.js"></script>
+<script src="https://syntagmatic.github.io/parallel-coordinates/examples/lib/underscore.math.js"></script>
+
+</head>
+
+<body>
+
+<style>
+.chart div {
+  font: 10px sans-serif;
+  background-color: steelblue;
+  text-align: right;
+  padding: 3px;
+  margin: 1px;
+  color: white;
+}
+</style>
+
+<div id="pc1" class="parcoords" style="width:1000px;height:150px"></div>
+
+<script>
+
+// load csv file and create the chart
+d3.csv('chemo253.csv', function(d) {return {area: +d.AREA, texture: +d.TEXTURE};}, function(d) {
+  pc1 = d3.parcoords()("#pc1")
+    .data(d)
+    .render()
+    .brushMode("1D-axes") // enable brushing
+    .reorderable(); // enables reordering
+  });
+
+// d3.csv('chemo253.csv')
+//   .row(function(d) {
+//     return {
+//       area: +d.AREA,
+//       texture: +d.TEXTURE
+//     };
+//   })
+// //  .get(function(e, data) { console.log(data) });
+//   .get(function(e, data) {
+// //     d3.select("chart").selectAll("div").data(data).enter().append("div").style("width", function(data) { return d * 10 + "px"; })}) ;
+//   pc1 = d3.parcoords()("#pc1")
+//   .data(data)
+//   .render()
+//   .brushMode("1D-axes")
+//   .reorderable(); 
+// } );
+//   .get(function(e, data) {
+//     pc1 = d3.parcoords()("#pc1")
+//     .data(data).select()
+//     .render()
+//     .brushMode("1D-axes") // enable brushing
+//     .reorderable(); // enables reordering
+//   });
+
+</script>
+
+</body>
+</html>
