@@ -91,7 +91,8 @@
     roundedStar: {m: 5, n1: 2, n2: 7, n3: 7, a: 1, b: 1},
     square: {m: 4, n1: 100, n2: 100, n3: 100, a: 1, b: 1},
     star: {m: 5, n1: 30, n2: 100, n3: 100, a: 1, b: 1},
-    triangle: {m: 3, n1: 100, n2: 200, n3: 200, a: 1, b: 1}
+    triangle: {m: 3, n1: 100, n2: 200, n3: 200, a: 1, b: 1},
+    cancer: {m: 10, n1: 6, n2: 6, n3: 7, a: 1, b: 1}
   };
 
   d3.superformulaTypes = d3.keys(_superformulaTypes);
