@@ -42,11 +42,17 @@ var types = {
   cancer: {m: 10, n1: 6, n2: 6, n3: 7, a: 1, b: 1}
 };
 
+var startsize = 10000;
+
 var format = d3.format(".4n");
 
 var scale = d3.scale.linear()
     .domain([-10, 20, 1000])
     .range([0, 800, 1000]);
+
+var sizescale = d3.scale.linear()
+    .domain([1000, 100000])
+    .range([0, 1000]);
 
 var svg = d3.select("body")
   .append("svg")
@@ -54,8 +60,8 @@ var svg = d3.select("body")
     .attr("height", 500);
 
 var shape = d3.superformula()
-    .type("asterisk")
-    .size(100000)
+    .type("cancer")
+    .size(startsize)
     .segments(3600);
 
 var path = svg.append("path")
@@ -65,7 +71,12 @@ var path = svg.append("path")
 
 var control = d3.select("#controls")
   .selectAll("div")
-    .data(d3.entries(types.asterisk))
+    .data(d3.entries(types.cancer))
+  .enter().append("div")
+    .attr("id", function(d) { return d.key; });
+
+var sizecontrol = d3.select("#controls")
+  .selectAll("div#size").data(d3.entries({size: startsize}))
   .enter().append("div")
     .attr("id", function(d) { return d.key; });
 
