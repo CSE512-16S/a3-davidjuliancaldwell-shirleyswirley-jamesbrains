@@ -18,19 +18,31 @@
             border-radius: 8px;
             pointer-events: none;
         }
+
+        /* for absolute position of label
+/*        label {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }*/
+
+        path:hover {
+            fill: orange;
+        }
     </style>
 </head>
 
 <body>
 
-<p id="add">Add a new data value</p>
-<p id="remove">Remove a data value</p>
 
-<form>
-    <label><input type="radio" name="mode" value="chemo1"> Chemo1 </label>
-    <label><input type="radio" name="mode" value="chemo2" checked> Chemo2 </label>
+<label id="chemo1"><input type="checkbox">Chemo1</label>
+<label id="died"><input type="checkbox">Death due to cancer</label>
 
-</form>
+<p id="remove">Click me! - Remove people who match ....</p>
+
+<p id="directions">Click on a person to sort by Survival Time</p>
+
+
 
 <script type="text/javascript">
 
@@ -58,6 +70,8 @@
             .attr("class", "tooltip")
             .style("opacity", 0);
 
+    // set pixel offset for the mouseover
+    var pxOff = 10;
 
     d3.tsv("chemo253.txt",
             function(data) {
@@ -98,16 +112,26 @@
                             div.transition()
                                     .duration(200)
                                     .style("opacity", .9);
-                            div.html("Survival time  " + d.TIME_B)
-                                    .style("left", (d3.event.pageX) + "px")
-                                    .style("top", (d3.event.pageY - 28) + "px");
+                            div.html("Survival time  " + d.TIME_B + "\n" + "Hello")
+                                    .style("left", (d3.event.pageX)+ pxOff + "px" )
+                                    .style("top", (d3.event.pageY - 28)+ pxOff + "px" );
+                            /*d3.select(this)
+                             .transition()
+                             .duration(250)
+                             .attr("fill","orange");*/
                         })
                         .on("mouseout", function (d) {
                             div.transition()
-                                    .duration(500)
+                                    .duration(200)
                                     .style("opacity", 0);
+                            /*d3.select(this)
+                             .transition()
+                             .duration(200)
+                             .attr("fill", "rgb(" + (+d.TIME_B * 2  ) + ", " + (+d.TIME_B * 2 ) + ", " + (+d.TIME_B * 2 ) + ")");*/
                         })
-                        .on("click", function() {
+                        .on("click", function () {
+                            d3.transition()
+                                    .duration(500);
                             sortBars();
                         });
 
@@ -122,6 +146,7 @@
                     sortOrder = !sortOrder;
 
                     pathP
+
                             .sort(function (a, b) {
                                 if (sortOrder) {
                                     return d3.ascending(+a.TIME_B, +b.TIME_B);
@@ -131,92 +156,82 @@
                             })
                             .transition()
                             .delay(function (d, i) {
-                                return i * 50;
+                                return i * 25;
                             })
-                            .duration(1000)
+                            .duration(5000)
                             .attr("transform", function (d, i) {
                                 return "scale(0.4) translate(" + (i % 40) * 40 + "," + Math.floor(i / 40) * 150 + ")";
                             })
-                            ;
-                }
+                    ;
+                };
+
+
+                d3.select("#chemo1").on("change", change);
+                var highlightOrder = false;
+
+                function change() {
+                    highlightOrder = !highlightOrder;
+
+                    pathP
+                            .transition()
+                            .delay(function (d, i) {
+                                return i * 50;
+                            })
+                            .duration(500)
+                            .attr("stroke", function (d) {
+                                if (highlightOrder) {
+                                    if (d.CHEMO == '0')
+                                        return "green";
+                                    else
+                                        return "cyan"
+                                } else {
+                                    if (d.CODE_B == '0')
+                                        return "magenta";
+                                    else
+                                        return "orange"
+                                }
+                            });
+
+
+
+                };
+
+                d3.select("#died").on("change", change2);
+                var highlightOrder2 = false;
+
+                function change2() {
+                    highlightOrder2 = !highlightOrder2;
+                    pathP
+                            .transition()
+                            .delay(function (d, i) {
+                                return i * 50;
+                            })
+                            .duration(500)
+                            .attr("stroke", function (d) {
+                                if (highlightOrder2) {
+                                    if (d.CODE_B == '0')
+                                        return "yellow";
+                                    else
+                                        return "pink"
+                                } else {
+                                    if (d.CODE_B == '0')
+                                        return "magenta";
+                                    else
+                                        return "orange"
+                                }
+                            })
+                            .attr("fill", function (d) {
+                                if(highlightOrder2) {
+                                    if (d.CODE_B == '0') {
+                                        return "white"
+                                    }
+                                }
+                            })
+                };
+
+
+
             });
-
-
-/*    var sortTimeout = setTimeout(function() {
-        d3.select("input").property("checked", true).each(change);
-    }, 2000);
-
-    function change() {
-        clearTimeout(sortTimeout);
-
-        // Copy-on-write since tweens are evaluated after a delay.
-
-
-        svg.selectAll("pathP")
-                .sort(function(a,b) { +a.TIME_B - +b.TimeB; })
-                .attr("stroke-width", 4)
-                .attr("stroke", function(d) {
-                    if (d.CODE_B == '0')
-                        return "magenta";
-                    else
-                        return "orange"
-                })
-                .attr("fill", function(d) {
-                    //return "rgb(0, 0, " + (+d.TIME_B * 10) + ")";
-                    return "rgb(" + (+d.TIME_B *2  ) + ", " + (+d.TIME_B *2 ) + ", " + (+d.TIME_B *2 ) + ")";
-
-                })
-                .attr("transform", function(d,i) {
-                    return "scale(0.4) translate(" + (i%40)*40 + "," + Math.floor(i/40)*150  + ")";
-                });
-
-        var transition = svg.transition().duration(750),
-                delay = function(d, i) { return i * 50; };
-
-    };*/
-
-    /*
-     d3.selectAll("input").on("change", change);
-
-     var timeout = setTimeout(function() {
-     d3.select("input[value=\"grouped\"]").property("checked", true).each(change);
-     }, 2000);
-
-     function change() {
-     clearTimeout(timeout);
-     if (this.value === "grouped") transitionGrouped();
-     else transitionStacked();
-     }
-
-     function transitionGrouped() {
-     y.domain([0, yGroupMax]);
-
-     rect.transition()
-     .duration(500)
-     .delay(function(d, i) { return i * 10; })
-     .attr("x", function(d, i, j) { return x(d.x) + x.rangeBand() / n * j; })
-     .attr("width", x.rangeBand() / n)
-     .transition()
-     .attr("y", function(d) { return y(d.y); })
-     .attr("height", function(d) { return height - y(d.y); });
-     }
-
-     function transitionStacked() {
-     y.domain([0, yStackMax]);
-
-     rect.transition()
-     .duration(500)
-     .delay(function(d, i) { return i * 10; })
-     .attr("y", function(d) { return y(d.y0 + d.y); })
-     .attr("height", function(d) { return y(d.y0) - y(d.y0 + d.y); })
-     .transition()
-     .attr("x", function(d) { return x(d.x); })
-     .attr("width", x.rangeBand());
-     }
-
-     */
-
-
 </script>
 </body>
 </html>
