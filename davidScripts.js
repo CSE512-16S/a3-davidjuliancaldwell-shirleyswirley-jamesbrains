@@ -64,7 +64,7 @@ d3.tsv("chemo253.txt",
                 div.transition()
                     .duration(200)
                     .style("opacity", .9);
-                div.html("Survival time  " + d.TIME_B + "\n" + "Hello")
+                div.html("Survival time  " + d.TIME_B + "\n" )
                     .style("left", (d3.event.pageX)+ pxOff + "px" )
                     .style("top", (d3.event.pageY - 28)+ pxOff + "px" );
                 /*d3.select(this)
