@@ -34,6 +34,7 @@ path {
 <div id="controls"></div>
 <script src="//d3js.org/d3.v3.min.js"></script>
 <script src="superformula.js"></script>
+
 <script>
 
 var types = {
@@ -67,6 +68,16 @@ var shape = d3.superformula()
 var path = svg.append("path")
     .attr("class", "big")
     .attr("transform", "translate(480,250)")
+    .attr("d", shape);
+
+var path2 = svg.append("path")
+    .attr("class", "big")
+    .attr("transform", "translate(280,150)")
+    .attr("d", shape);
+
+var path3 = svg.append("path")
+    .attr("class", "big")
+    .attr("transform", "translate(680,350)")
     .attr("d", shape);
 
 var control = d3.select("#controls")
