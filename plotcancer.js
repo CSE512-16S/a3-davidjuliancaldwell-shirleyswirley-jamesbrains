@@ -18,9 +18,10 @@ var format = d3.format(".2g");
 
 // Generate plot 
 
-var plotCells = function()
+var plotCells = function(globalData)
 {
-    
+    controlslides = pullcelldata(globalData);
+
     var control = d3.select("div#controls")
       .selectAll("div")
         .data(d3.entries(controlslides)
@@ -89,6 +90,26 @@ var plotCells = function()
                 if(d[1] == 0 || d[1] == 2)
                     return "#FFE8E8";
             })
+}
+
+function pullcelldata(data_in) {
+    var scalearea = d3.scale.linear()
+        .domain([300, 3500])
+        .range([500, 50000]);
+    var scalefract = d3.scale.linear()
+        .domain([0, 0.1])
+        .range([0, 30]);
+
+    marea = d3.median(data_in.map(function(d) {return d.area}));
+    mfract = d3.median(data_in.map(function(d) {return d.fract}));
+    sdarea = d3.median(data_in.map(function(d) {return d.sarea}));
+    sdfract = d3.median(data_in.map(function(d) {return d.sfract}));
+
+    return {
+        c1: {s1: scalearea(marea-sdarea), m1: scalefract(mfract-sdfract)},
+        c2: {s2: scalearea(marea), m2: scalefract(mfract)},
+        c3: {s3: scalearea(marea+sdarea), m3: scalefract(mfract+sdfract)}
+    };
 }
 
 function changed(d) {
