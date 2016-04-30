@@ -1,36 +1,29 @@
 var controlslides = {
-    m1: {s: 10000, m: 10},
-    m2: {s: 10000, m: 10},
-    m3: {s: 10000, m: 10}
+    m1_s: 1000, m1_m: 10,
+    m2_s: 10000, m2_m: 10,
+    m3_s: 100000, m3_m: 10
 };
 /*
-var types = {
-  asterisk: {m: 12, n1: .3, n2: 0, n3: 10, a: 1, b: 1},
-  roundedStar: {m: 5, n1: 2, n2: 7, n3: 7, a: 1, b: 1},
   cancer: {m: 10, n1: 6, n2: 6, n3: 7, a: 1, b: 1, s: 1000}
-};
 */
 
 // Create controls
 
+var scale_m = d3.scale.linear()
+    .domain([-10, 20, 1000])
+    .range([0, 800, 1000]);
+
+var scale_s = d3.scale.linear()
+    .domain([1000, 100000])
+    .range([0, 1000]);
+
+var format = d3.format("g");
+
 var control = d3.select("#controls")
   .selectAll("div")
-    .data(d3.entries(controlslides)
-      .map(function(d) { return d3.entries(d.value); })
-      .reduce(function(d1, d2) { return d1.concat(d2); })
-      )
+  .data(d3.entries(controlslides))
   .enter().append("div")
     .attr("id", function(d) { return d.key; });
-
-/*
-var sizecontrol = d3.select("#controls")
-  .selectAll("div#size").data(d3.entries({size: startsize}))
-  .enter().append("div")
-    .attr("id", function(d) { return d.key; });
-
-sizecontrol.append("label")
-    .text(function(d) { return d.key; });
-*/
 
 control.append("label")
     .text(function(d) { return d.key; });
@@ -39,38 +32,15 @@ control.append("input")
     .attr("type", "range")
     .attr("max", 1000)
     .attr("min", 0)
-    .property("value", function(d) { return scale(d.value); })
+    .property("value", function(d) {
+       if(d.key.indexOf("_s") > -1) return scale_s(d.value);
+       else if(d.key.indexOf("_m") > -1) return scale_m(d.value);
+       })
     .on("change", changed)
     .on("input", changed);
 
 control.append("span")
     .text(function(d) { return format(d.value); });
-
-sizecontrol.append("input")
-    .attr("type", "range")
-    .attr("max", 1000)
-    .attr("min", 0)
-    .property("value", function(d) { return sizescale(d.value); })
-    .on("change", changesize)
-    .on("input", changesize);
-
-sizecontrol.append("span")
-    .text(function(d) { return format(d.value); });
-
-
-
-
-var startsize = 10000;
-
-var format = d3.format(".4n");
-
-var scale = d3.scale.linear()
-    .domain([-10, 20, 1000])
-    .range([0, 800, 1000]);
-
-var sizescale = d3.scale.linear()
-    .domain([1000, 100000])
-    .range([0, 1000]);
 
 var svg = d3.select("body")
   .append("svg")
@@ -122,7 +92,7 @@ function changed(d) {
     d3.select(this.nextSibling).text(format(v));
   }
   else {
-    var v = scale.invert(this.value);
+    var v = scale_s.invert(this.value);
     path.attr("d", shape.param(d.key, v));
     d3.select(this.nextSibling).text(format(v));
   }
