@@ -33,22 +33,9 @@ var plotparcoords = function(subset_of_data, hide_these_axes)
 
   // calculate means on brushed data
   pc1.on("brush",function(d) {
-    var areasum = 0;
-    var fract_dsum = 0;
-    var data1 = d3.nest()
-      .key(function(d) {
-        return d.AREA;
-      })
-      .rollup(function(d) {
-        return d3.sum(d, function(g) {
-          areasum += +g.area;
-          fract_dsum += +g.fract;
-        })
-      }).entries(d);
-    areaavg = areasum / d.length;
-    fract_davg = fract_dsum / d.length;
-    
-    
+
+    brushchanged(d); // use this brush to update James's plot
+     // use this to update David's plot
   });
 
 }

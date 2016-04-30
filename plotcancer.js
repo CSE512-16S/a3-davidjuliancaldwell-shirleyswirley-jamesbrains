@@ -112,6 +112,17 @@ function pullcelldata(data_in) {
     };
 }
 
+function brushchanged(brushdata_in) {
+    controlslides = pullcelldata(brushdata_in);
+
+    updatesel = d3.select("svg#cancerdisp")
+        .selectAll("path")
+        .data(d3.entries(controlslides)
+            .map(function(d, dind) { return [d.key, dind, d.value]; }))
+
+    updatesel.attr("d", shape);
+}
+
 function slidechanged(d) {
 
     updatesel = d3.select("svg#cancerdisp")
