@@ -1,7 +1,7 @@
 var controlslides = {
-    m1_s: 1000, m1_m: 10,
-    m2_s: 10000, m2_m: 10,
-    m3_s: 100000, m3_m: 10
+    m1: {s: 10000, m: 10},
+    m2: {s: 10000, m: 10},
+    m3: {s: 10000, m: 10}
 };
 /*
   cancer: {m: 10, n1: 6, n2: 6, n3: 7, a: 1, b: 1, s: 1000}
@@ -21,7 +21,13 @@ var format = d3.format("g");
 
 var control = d3.select("#controls")
   .selectAll("div")
-  .data(d3.entries(controlslides))
+    .data(d3.entries(controlslides)
+      .map(function(d) { return d3.entries(d.value); })
+      .reduce(function(d1, d2) { return d1.concat(d2); })
+      )
+  .enter().append("div")
+    .attr("id", function(d) { return d.key; });
+
   .enter().append("div")
     .attr("id", function(d) { return d.key; });
 
