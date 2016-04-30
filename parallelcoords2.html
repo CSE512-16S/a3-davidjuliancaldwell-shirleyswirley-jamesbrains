@@ -48,9 +48,20 @@ function(d) {
     .data(data)
     .alpha(1)
     .render()
+    .reorderable()
     .brushMode("1D-axes")
+    .interactive() // command-line mode
 
-  // update on brush event
+  // default z-score colored according to the following variable
+  change_color("AREA");
+
+  // click label to activate coloring
+  pc1.svg.selectAll(".dimension")
+    .on("click", change_color)
+    .selectAll(".label")
+    //.style("font-size", "14px");
+
+  // calculate means on brushed data
   pc1.on("brush",function(d) {
     var areasum = 0;
     var fract_dsum = 0;
@@ -72,6 +83,36 @@ function(d) {
   // ------------
 
 });
+
+// ------------
+// FUNCTIONS
+
+// fxn to update color
+function change_color(dimension) {
+  pc1.svg.selectAll(".dimension")
+    .style("font-weight", "normal")
+    .filter(function(d) { return d == dimension; })
+    .style("font-weight", "bold")
+
+  pc1.color(zcolor(pc1.data(),dimension)).render()
+}
+
+// fxn to return color function based on plot and dimension
+function zcolor(col, dimension) {
+  var z = zscore(_(col).pluck(dimension).map(parseFloat))
+  return function(d) { return zcolorscale(z(d[dimension])) }
+};
+
+// fxn to color by zscore
+function zscore(col) {
+  var n = col.length,
+      mean = _(col).mean(),
+      sigma = _(col).stdDeviation();
+  return function(d) {
+    return (d-mean)/sigma;
+  };
+};
+// ------------
 
 </script>
 
