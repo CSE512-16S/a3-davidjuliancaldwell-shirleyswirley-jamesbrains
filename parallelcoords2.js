@@ -5,7 +5,8 @@ var zcolorscale = d3.scale.linear()
   .interpolate(d3.interpolateLab);
 
 // load csv file and create the chart
-var areaavg = 0;
+var areaavg;
+var fract_davg;
 
 var plotparcoords = function(subset_of_data)
 {
