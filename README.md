@@ -17,7 +17,11 @@ Dr. Wolberg from the University of Wisconsin, and Professor Olvi Mangasarian fro
 
 We decided that this would be a fun data set to visualize because of the possibilities for interesting pictorial representations of patients and cells, in addition to the fact that the data itself are very well-curated and complete.
 
-Our final visualization ????? 
+Our final visualization has 3 components, which all talk to each other. At the top, we have a parallel coordinates chart with lines (each corresponding to a different patient) colored by z-score according to the selected axis as well as reorderable and brushable axes.
+Brushed data is then sent to our second component, which is a pictorial representation of patient's cells (in particular, their area and fractal dimension).
+In this idealized represntation of patient cells, the cell in the middle encodes the median cell area and fractal dimension of the brush-selected patients, while the cells on either side of it encode the median individual standard deviations of cell area and fractal dimension among the same brush-selected patients (minus 1 z-score on the left, plus 1 z-score on the right).     
+The brushed data is also sent to our third component, which is a sortable, colorable by nominal boolean variables pictorial representation of brush-selected patients. These nominalvariables include whether the patient died or survived and whether they underwent chemo or not.   
+Our 3 components together help us to understand how observed cell properties are related to one another as well as how they can help predict and diagnose breast cancer outcomes.  
 
 ## Running Instructions
 
@@ -48,7 +52,7 @@ In the end, we persevered and figured out how to get parallel coordinates brushi
 - Time spent developing our application:
   -*James* spent about ????? 
   -*David* spent about ?????
-  -*Shirley* spent a couple hours working with and understanding the parallel coordinates library and   
+  -*Shirley* spent a couple hours working with and understanding the parallel coordinates library 
 
 - Aspects taking the most time included:
   - DEBUGGING.
