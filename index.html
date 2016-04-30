@@ -22,22 +22,28 @@
 
         d3.tsv("chemo253.txt",
             function(d) { return { // everyone uses these features
-                
+                patient: +d.PATIENT,
+                code_a: +d.CODE_A,
                 area: +d.AREA,
+                texture: +d.TEXTURE,
                 perimeter: +d.PERIMETR,
                 smooth: +d.SMOOTH,
+                concave: +d.CONCV,
                 symmetry: +d.SYMM,
-                fract: +d.FRACT_D }; },
+                fract: +d.FRACT_D,
+                sarea: +d.AREA,
+                sfract: +d.SFRACT_D,
+                }; },
             function(datarows) {
                 globalData = datarows;
 
                 // --- everyone's animations gets called from this point on --- //
 
-                plotparcoords(globalData
-                    //.map(function(d) {return {area: d.area, symmetry: d.symmetry}})
-                        // SUBSELECTION FOR SHIRLEY PLOT ONCE DAVID HAS MORE FEATURES
-                );
-                plotCells();
+                plotparcoords(globalData,   // establish Shirley's plot
+                    ["patient", "code_a", "sarea", "sfract"]); 
+                        // second parameter is what axes to hide from the parallel coords
+
+                plotCells(); // establish James's plot
                 }
         );
         

@@ -8,13 +8,14 @@ var zcolorscale = d3.scale.linear()
 var areaavg;
 var fract_davg;
 
-var plotparcoords = function(subset_of_data)
+var plotparcoords = function(subset_of_data, hide_these_axes)
 {
-    console.log(subset_of_data)
+  // console.log(subset_of_data)
   // ------------
   // PARALLEL COORDINATES
   pc1 = d3.parcoords()("#pc1")
     .data(subset_of_data)
+    .hideAxis(hide_these_axes)
     .alpha(1)
     .render()
     .reorderable()
@@ -46,6 +47,7 @@ var plotparcoords = function(subset_of_data)
       }).entries(d);
     areaavg = areasum / d.length;
     fract_davg = fract_dsum / d.length;
+    
     
   });
 
