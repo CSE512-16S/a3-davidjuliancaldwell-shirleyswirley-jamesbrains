@@ -5,6 +5,13 @@ var controlslides = {
 };
 
 // Generate plot 
+var scalearea = d3.scale.linear()
+    .domain([200, 3500])
+    .range([500, 50000]);
+var scalefract = d3.scale.linear()
+    .domain([0, 0.125])
+    .range([0, 30]);
+var formatcelltext = d3.format(".4g");
 
 var plotCells = function(globalData)
 {
@@ -30,38 +37,42 @@ var plotCells = function(globalData)
         .param("n1", function(d) {return 6+((get_mvals(d)-10)/10);} )
         .segments(256);
     
-    d3.select("svg#cancerdisp")
+    cancerdispd3 = d3.select("svg#cancerdisp")
         .selectAll("path")
         .data(d3.entries(controlslides)
             .map(function(d, dind) { return [d.key, dind, d.value]; }))
-        .enter()
-        .append("path")
-            .attr("class", "big")
-            .attr("transform", function(d) {
+        .enter();
+
+    cancerdispd3.append("path")
+        .attr("class", "big")
+        .attr("transform", function(d) {
                 return "translate("+
                 //(580-d[1]*150)+","+(200+d[1]*100)+
                 (200)+","+(200+d[1]*125)+
                 ")"
-                })
-            .attr("id", function(d) {return d[0];})
-            .attr("d", shape)
-            .style("fill", function(d) {
+            })
+        .attr("id", function(d) {return d[0];})
+        .attr("d", shape)
+        .style("fill", function(d) {
                 if(d[1] == 0 || d[1] == 2)
                     return "#FFE9DE";
             })
-            .style("stroke", function(d) {
+        .style("stroke", function(d) {
                 if(d[1] == 0 || d[1] == 2)
                     return "#FFE8E8";
             })
+
+    cancerdispd3.append("text")
+        .attr("x", function(d) { return 175; })
+        .attr("y", function(d) {
+            return (200+d[1]*125);
+            })
+        .text(function(d) {
+            return "size: "+formatcelltext((scalearea.invert(get_mvals(d))))+"\n";
+        });
 }
 
 function pullcelldata(data_in) {
-    var scalearea = d3.scale.linear()
-        .domain([200, 3500])
-        .range([500, 50000]);
-    var scalefract = d3.scale.linear()
-        .domain([0, 0.125])
-        .range([0, 30]);
 
     marea = d3.median(data_in.map(function(d) {return d.area}));
     mfract = d3.median(data_in.map(function(d) {return d.fract}));
