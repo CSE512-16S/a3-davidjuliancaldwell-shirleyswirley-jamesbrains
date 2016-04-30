@@ -15,22 +15,258 @@
 
 <body>
 
-<style>
-.chart div {
-  font: 10px sans-serif;
-  background-color: steelblue;
-  text-align: right;
-  padding: 3px;
-  margin: 1px;
-  color: white;
-}
-</style>
-
 <div id="pc1" class="parcoords" style="width:1000px;height:150px"></div>
 
 <script>
 
-// load csv file and create the chart
+// WORKS!!!! BUT HOW TO MAKE INTO NUMBER?
+/*
+d3.csv("chemo253.csv",
+function(d) {
+  d = d.filter(function(row) {
+    return row['AREA'] == +1013;
+  });
+  console.log(d);
+});
+*/
+
+// WORKS!!!! NOW TRY PARALLEL COORDINATES
+/*
+d3.csv("chemo253.csv", 
+function(d) {
+  data = d.filter(function(row) {
+    var area = +row['AREA'];
+    return 600 <= area && area <= 1000;
+  });
+  console.log(data);
+});
+*/
+
+// WORKS WITH PARALLEL COORDINATES!!!!! BUT ONLY SELECTED BY ROWS, NOT COLUMNS 
+/*
+d3.csv("chemo253.csv",
+function(d) {
+  data = d.filter(function(row) {
+    var area = +row['AREA'];
+    return 600 <= area && area <= 1000;
+  });
+  console.log(data);
+  pc1 = d3.parcoords()("#pc1")
+    .data(data)
+    .render()
+    .brushMode("1D-axes")
+    .reorderable();
+}
+);
+*/
+
+// WORKS WITH PARALLEL COORDINATES!!!!! BUT NOW SELECTED BY COLUMNS, NOT ROWS
+
+var mydata = null;
+d3.csv('chemo253.csv')
+  .row(function(d) { return {area: +d.AREA, texture: +d.TEXTURE}; })
+  .get(function(error, d) {
+    mydata = d;
+    //mydata = mydata.filter(function(row) { return 900<= row['AREA'] && row['AREA'] <=1000;}); // this line doesn't work
+    mydataisready();
+  });
+function mydataisready() {
+  console.log(mydata);
+  pc1 = d3.parcoords()("#pc1")
+    .data(mydata)
+    .render()
+    .brushMode("1D-axes")
+    .reorderable();
+}
+
+
+// DIDN'T WORK
+var mydata = null;
+d3.csv('chemo253.csv')
+  .filter(function(row) { 
+    var area = +row['AREA'];
+    return 900 <= area && area <= 1000;
+  })
+  .get(function(error, d) {
+    mydata = d;
+    //mydata = mydata.filter(function(row) { return 900<= row['AREA'] && row['AREA'] <=1000;}); // this line doesn't work
+    mydataisready();
+  });
+function mydataisready() {
+  console.log(mydata);
+  pc1 = d3.parcoords()("#pc1")
+    .data(mydata)
+    .render()
+    .brushMode("1D-axes")
+    .reorderable();
+}
+
+
+// DIDN'T WORK
+/*
+d3.csv('chemo253.csv',
+function(d) { return {area: +d.AREA, texture: +d.TEXTURE}; },
+function(d) {
+  data = d.filter(function(row) {
+    var area = +row['AREA'];
+    return 900 <= area && area <= 1000;
+  });
+  console.log(data);
+  pc1 = d3.parcoords()("#pc1")
+    .data(data)
+    .render()
+    .brushMode("1D-axes")
+    .reorderable();
+}
+);
+*/
+
+/*
+var saveout_data;
+d3.csv('chemo253.csv')
+  .row(function(d) {
+    return {
+      area: +d.AREA,
+      texture: +d.TEXTURE
+    };
+  })
+  //.get(function(e, data) { console.log(data) });
+  .get(function(e, data) {
+    saveout_data = data;
+  });
+
+var newdata;
+newdata = saveout_data.filter(function(row){
+  var area = +row['AREA'];
+  return 900 <= area && row['AREA'] <= 1000;
+}); 
+*/
+
+/*
+var saveout_data;
+d3.csv('chemo253.csv')
+  .row(function(d) {
+    return {
+      area: +d.AREA,
+      texture: +d.TEXTURE
+    };
+  })
+  .filter(function(row) {
+    return 900 <= row['AREA'] && row['AREA'] <= 1000;
+  })
+  //.get(function(e, data) { console.log(data) });
+  .get(function(e, data) {
+    saveout_data = data;
+  });
+*/
+
+/*
+pc1 = d3.parcoords()("#pc1")
+    .data(saveout_data)
+    .render()
+    .brushMode("1D-axes")
+    .reorderable();
+
+d3.csv("chemo253.csv",
+function(d) {
+  d.forEach(function(d){ d['AREA'] = +d['AREA']; d['PATIENT'] = +d['PATIENT']; });.
+  return {area: d.AREA, texture: d.TEXTURE};
+  console.log(d);
+});
+*/
+/*,
+function(d) {
+  data = d.filter(function(row) {
+    var area = +row['AREA'];
+    return 900 <= area && area <= 1000;
+  });
+  console.log(data);
+  pc1 = d3.parcoords()("#pc1")
+    .data(data)
+    .render()
+    .brushMode("1D-axes")
+    .reorderable();   
+}
+);
+*/
+
+////////////////////////////////////////////////////////////////////////////////////
+
+// DIDN'T WORK
+/*d3.csv('chemo253.csv', function(d) {return {area: d.AREA, texture: d.TEXTURE};},
+function(d) {
+  d = d.filter(function(row) {
+    return row['AREA'] == "1013";
+  })
+  console.log(d);
+});
+*/
+
+// DIDN'T WORK
+//d3.csv('chemo253.csv', function(d) {return {area: +d.AREA, texture: +d.TEXTURE};}, function(d) {console.log(d);});
+
+// DIDN'T WORK
+/*
+d3.csv("chemo253.csv", function(d) {return {area: d.AREA, texture: d.TEXTURE};},
+function(d) {
+  d = d.filter(function(row) {
+    return row['AREA'] == '1013';
+  })
+  console.log(d);
+});
+*/
+
+// DIDN'T WORK
+/*d3.csv("chemo253.csv", function(d) {
+var filterareadata = d.filter(function(d,i) 
+{ 
+        if (d["AREA"] == "1013") 
+        { 
+            return d; 
+        } 
+    })
+},function(d) {console.log(d);});
+*/
+
+// DIDN'T WORK
+//d3.csv('chemo253.csv', function(d) {return d.filter(function(d) {return d.PATIENT=='1';});}, function(d) {console.log(d);});
+
+// DIDN'T WORK
+/*d3.csv('chemo253.csv', function(d) {d=datafilter();}, function(d) {
+  console.log(d);
+  });
+*/
+
+// DIDN'T WORK
+/*d3.csv('chemo253.csv', function(d) {datafilter();}, function(d) {
+  pc1 = d3.parcoords()("#pc1")
+    .data(d)
+    .render();
+  });
+*/
+
+/* function datafilter(d){
+var sector = document.getElementById("AREA");
+var area = 1;
+data = data.filter(function(d) { return +d.AREA == 1013;});
+return data;}
+*/
+
+////////////////////////////////////////////////////////////////////////////////
+
+// load csv file without filtering the columns and create the chart 
+/*
+d3.csv('chemo253.csv', function(d) {
+  pc1 = d3.parcoords()("#pc1")
+    .data(d)
+    .render()
+    .brushMode("1D-axes") // enable brushing
+    .reorderable(); // enables reordering
+  });
+*/
+
+// load csv file, filter columns, and create the chart - method 1
+/*
 d3.csv('chemo253.csv', function(d) {return {area: +d.AREA, texture: +d.TEXTURE};}, function(d) {
   pc1 = d3.parcoords()("#pc1")
     .data(d)
@@ -38,30 +274,26 @@ d3.csv('chemo253.csv', function(d) {return {area: +d.AREA, texture: +d.TEXTURE};
     .brushMode("1D-axes") // enable brushing
     .reorderable(); // enables reordering
   });
+*/
 
-// d3.csv('chemo253.csv')
-//   .row(function(d) {
-//     return {
-//       area: +d.AREA,
-//       texture: +d.TEXTURE
-//     };
-//   })
-// //  .get(function(e, data) { console.log(data) });
-//   .get(function(e, data) {
-// //     d3.select("chart").selectAll("div").data(data).enter().append("div").style("width", function(data) { return d * 10 + "px"; })}) ;
-//   pc1 = d3.parcoords()("#pc1")
-//   .data(data)
-//   .render()
-//   .brushMode("1D-axes")
-//   .reorderable(); 
-// } );
-//   .get(function(e, data) {
-//     pc1 = d3.parcoords()("#pc1")
-//     .data(data).select()
-//     .render()
-//     .brushMode("1D-axes") // enable brushing
-//     .reorderable(); // enables reordering
-//   });
+// load csv file, filter columns, and create the chart - method 2
+/*
+d3.csv('chemo253.csv')
+  .row(function(d) {
+    return {
+      area: +d.AREA,
+      texture: +d.TEXTURE
+    };
+  })
+  //.get(function(e, data) { console.log(data) });
+  .get(function(e, d) {
+    pc1 = d3.parcoords()("#pc1")
+    .data(d)
+    .render()
+    .brushMode("1D-axes")
+    .reorderable(); 
+  });
+*/
 
 </script>
 
