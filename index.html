@@ -21,7 +21,9 @@
         var globalData = []; // everyone use this data saveout
 
         d3.tsv("chemo253.txt",
-            function(d) { return { // everyone uses these features
+
+            // ACCESSOR: everyone uses these features; already parsed to nums
+            function(d) { return {
                 patient: +d.PATIENT,
                 code_a: +d.CODE_A,
                 area: +d.AREA,
@@ -34,16 +36,20 @@
                 sarea: +d.AREA,
                 sfract: +d.SFRACT_D,
                 }; },
+
+            // CALLBACK: starts running
             function(datarows) {
                 globalData = datarows;
 
                 // --- everyone's animations gets called from this point on --- //
 
-                plotparcoords(globalData,   // establish Shirley's plot
-                    ["patient", "code_a", "sarea", "sfract"]); 
+                // establish Shirley's plot
                         // second parameter is what axes to hide from the parallel coords
+                plotparcoords(globalData,   
+                    ["patient", "code_a", "sarea", "sfract"]); 
 
-                plotCells(); // establish James's plot
+                // establish James's plot
+                plotCells(globalData); // establish James's plot
                 }
         );
         
