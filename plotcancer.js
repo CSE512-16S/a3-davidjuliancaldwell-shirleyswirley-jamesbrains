@@ -76,7 +76,14 @@ d3.select("svg#cancerdisp")
             })
         .attr("id", function(d) {return d[0];})
         .attr("d", shape)
-        .style("fill", "FFBD9C");
+        .style("fill", function(d) {
+            if(d[1] == 0 || d[1] == 2)
+                return "#FFE9DE";
+        })
+        .style("stroke", function(d) {
+            if(d[1] == 0 || d[1] == 2)
+                return "#FFE8E8";
+        })
 
 function changed(d) {
 
