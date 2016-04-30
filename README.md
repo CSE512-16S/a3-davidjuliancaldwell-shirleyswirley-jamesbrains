@@ -1,15 +1,15 @@
-# a3-jheer-mcorrell-jhoffs
+# a3-davidjuliancaldwell-shirleyswirley-jamesbrains
 ===============
 
 ## Team Members
 
 1. David Caldwell (davidjuliancaldwell)
-2. James Wu (jamesbrains)
-3. Shirley Leung (shirleyswirley)
+2. Shirley Leung (shirleyswirley)
+3. James Wu (jamesbrains)
 
 ## Visualization of Cellular Features and Breast Cancer Prognoses
 
-![Thumbnail](storyboardfinal.jpg)
+![Thumbnail](vispreview.jpg)
 
 Cancer is a leading cause of death worldwide. The WHO estimates that 8.2 million deaths were caused by cancer worldwide in 2012 (http://www.who.int/mediacentre/factsheets/fs297/en/).  One method for both diagnosis and prognosis in solid tumors is the assessment of the histologic characteristics of cancer cells obtained by a biopsy.
 
@@ -29,9 +29,7 @@ Access our visualization at http://cse512-16s.github.io/a3-davidjuliancaldwell-s
 
 ## Story Board
 
-![](storyboardfinal.jpg)
-
-Put either your storyboard content or a [link to your storyboard pdf file](storyboard.pdf?raw=true) here. Just like A2, you can use any software to create a *reasonable* pdf storyboard.
+?????Put either your storyboard content or a [link to your storyboard pdf file](storyboard.pdf?raw=true) here. Just like A2, you can use any software to create a *reasonable* pdf storyboard.
 
 ### Changes between Storyboard and the Final Implementation
 
@@ -43,20 +41,22 @@ In the end, we persevered and figured out how to get parallel coordinates brushi
 
 ## Development Process
 
-- Breakdown of how work was split among group members:
-..*James* created the idealized cell representation component to visually represent the variance and mean cell areas and fractal dimensions of the selected patients, which involved ...?????. 
-..*David* created the sortable boolean patient characteristic component, which involved ...?????
-..*Shirley* applied different capabilties of the parallel coordinates library to create the re-ordable, colored, and interactive components of the parallel coordinates component.
-..*Shirley* got the brushing on the parallel coordinates to talk to the other components.
-..*James* integrated all of the code together into one final tidy html page.
-..All 3 of us put together this writeup. 
+* Breakdown of how work was split among group members:
+  * **James** created the idealized cell representation component to visually represent the variance and mean cell areas and fractal dimensions of the selected patients, which involved ...?????. 
+  * **David** created the sortable boolean patient characteristic component, which involved ...?????
+  * **Shirley** applied different capabilties of the parallel coordinates library to create the re-ordable, colored, and interactive components of the parallel coordinates component.
+  * **Shirley** got the brushing on the parallel coordinates to talk to the other components.
+  * **James** integrated all of the code together into one final tidy html page.
+  * All 3 of us put together this writeup. 
 
-- Time spent developing our application:
-..*James* spent about ????? 
-..*David* spent about ?????
-..*Shirley* spent a couple hours working with and understanding the parallel coordinates library 
+* Time spent developing our application:
+  * All 3 of us spent a couple hours deciding on which dataset to use and doing data exploration in Tableau on the dataset we finally decided on. 
+  * All 3 of us spent a couple hours coming up with visualization ideas and storyboarding together.
+  * **James** spent about ????? 
+  * **David** spent about ?????
+  * **Shirley** spent a couple hours working with and understanding the parallel coordinates library. She spent another couple hours figuring out how to filter and select read-in csv files. She spent another couple hours figuring out how to deal with brushed data and sending that between components. 
 
-- Aspects taking the most time included:
-..DEBUGGING
-..Learning JavaScript and D3 from scratch, in general
-..Getting our components to talk to each other
+* Aspects taking the most time included:
+  * DEBUGGING
+  * Learning JavaScript and D3 from scratch, in general
+  * Getting our components to talk to each other
