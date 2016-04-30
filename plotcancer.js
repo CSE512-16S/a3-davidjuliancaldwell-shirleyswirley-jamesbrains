@@ -77,7 +77,8 @@ var plotCells = function(globalData)
             .attr("class", "big")
             .attr("transform", function(d) {
                 return "translate("+
-                (580-d[1]*150)+","+(200+d[1]*100)+
+                //(580-d[1]*150)+","+(200+d[1]*100)+
+                (580)+","+(100+d[1]*125)+
                 ")"
                 })
             .attr("id", function(d) {return d[0];})
@@ -94,10 +95,10 @@ var plotCells = function(globalData)
 
 function pullcelldata(data_in) {
     var scalearea = d3.scale.linear()
-        .domain([300, 3500])
+        .domain([200, 3500])
         .range([500, 50000]);
     var scalefract = d3.scale.linear()
-        .domain([0, 0.1])
+        .domain([0, 0.125])
         .range([0, 30]);
 
     marea = d3.median(data_in.map(function(d) {return d.area}));
@@ -106,9 +107,9 @@ function pullcelldata(data_in) {
     sdfract = d3.median(data_in.map(function(d) {return d.sfract}));
 
     return {
-        c1: {s1: scalearea(marea-sdarea), m1: scalefract(mfract-sdfract)},
+        c1: {s1: scalearea(marea+2*sdarea), m1: scalefract(mfract+2*sdfract)},
         c2: {s2: scalearea(marea), m2: scalefract(mfract)},
-        c3: {s3: scalearea(marea+sdarea), m3: scalefract(mfract+sdfract)}
+        c3: {s3: scalearea(marea-2*sdarea), m3: scalefract(mfract-2*sdfract)}
     };
 }
 
