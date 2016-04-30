@@ -42,8 +42,8 @@ var plotCells = function(globalData)
            if(d.key.indexOf("s") > -1) return scale_s(d.value);
            else if(d.key.indexOf("m") > -1) return scale_m(d.value);
            })
-        .on("change", changed)
-        .on("input", changed);
+        .on("change", slidechanged)
+        .on("input", slidechanged);
     
     control.append("span")
         .text(function(d) { return format(d.value); });
@@ -112,7 +112,7 @@ function pullcelldata(data_in) {
     };
 }
 
-function changed(d) {
+function slidechanged(d) {
 
     updatesel = d3.select("svg#cancerdisp")
         .selectAll("path")
