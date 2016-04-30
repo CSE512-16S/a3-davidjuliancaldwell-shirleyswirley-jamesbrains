@@ -3,21 +3,18 @@ var controlslides = {
     c2: {s2: 10000, m2: 10},
     c3: {s3: 5000, m3: 10}
 };
-/*
-  cancer: {m: 10, n1: 6, n2: 6, n3: 7, a: 1, b: 1, s: 1000}
-*/
 
 // Create controls
 
 var scale_m = d3.scale.linear()
-    .domain([-10, 20, 1000])
+    .domain([0, 20, 40])
     .range([0, 800, 1000]);
 
 var scale_s = d3.scale.linear()
     .domain([1000, 100000])
     .range([0, 1000]);
 
-var format = d3.format("g");
+var format = d3.format(".2g");
 
 var control = d3.select("div#controls")
   .selectAll("div")
@@ -47,14 +44,23 @@ control.append("span")
 
 // Create shapes
 
+function get_svals(d) {
+    return d3.entries(d[2])
+        .map(function(d) {return d.value;})
+        .reduce(function(d1, d2) { return d1; } )
+}
+function get_mvals(d) {
+    return d3.entries(d[2])
+        .map(function(d) {return d.value;})
+        .reduce(function(d1, d2) { return d2; } )
+}
+
 shape = d3.superformula()
     .type("cancer")
-    .size(function(d) { return d3.entries(d[2])
-        .map(function(d) {return d.value;})
-        .reduce(function(d1, d2) { return d1; } ) }
-        )
-//    .param(function(d) d3.entries());
-    .segments(3600);
+    .size(function(d) {return get_svals(d);} )
+    .param("m", function(d) {return get_mvals(d);} )
+    .param("n1", function(d) {return 6+((get_mvals(d)-10)/10);} )
+    .segments(256);
 
 d3.select("svg#cancerdisp")
     .selectAll("path")
@@ -69,26 +75,24 @@ d3.select("svg#cancerdisp")
             ")"
             })
         .attr("id", function(d) {return d[0];})
-        .attr("d", shape);
+        .attr("d", shape)
+        .style("fill", "FFBD9C");
 
-function changed(scrollvalue) {
+function changed(d) {
 
-    /*
     updatesel = d3.select("svg#cancerdisp")
         .selectAll("path")
         .data(d3.entries(controlslides)
-            .map(function(d, dind) { return [d.key, dind, d.value]; })))
-            */
+            .map(function(d, dind) { return [d.key, dind, d.value]; }))
 
-    if(scrollvalue.key.indexOf("s") > -1) {
+    if(d.key.indexOf("s") > -1) {
         var v = scale_s.invert(this.value);
-      //  updatesel.attr("d", shape.size(v));
     }
-    else if(scrollvalue.key.indexOf("m") > .1) {
+    else if(d.key.indexOf("m") > -1) {
         var v = scale_m.invert(this.value);
-       // path.attr("d", shape.param(d.key, v));
     }
 
-    controlslides["c"+this.key.substr(1)][this.key] = this.value
+    controlslides["c"+d.key.substr(1)][d.key] = v;
+    updatesel.attr("d", shape);
     d3.select(this.nextSibling).text(format(v));
 }
