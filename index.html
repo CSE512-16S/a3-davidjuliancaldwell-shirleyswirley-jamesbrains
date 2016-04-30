@@ -6,26 +6,46 @@
     <title>Cancer plotter</title>
 
     <link rel="stylesheet" type="text/css" href="controlstyles.css" />
+    <link rel="stylesheet" type="text/css" href="https://syntagmatic.github.io/parallel-coordinates/d3.parcoords.css" />
 
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script src="superformula.js"></script>
+    <script src="https://syntagmatic.github.io/parallel-coordinates/d3.parcoords.js"></script>
 </head>
 
 <body>
     <script>
-        var globalData = [];
+        var globalData = []; // everyone use this data saveout
+
         d3.tsv("chemo253.txt",
-            function(d) { return { area: +d.AREA, fract: +d.FRACT_D }; },
-            function(datarows) { globalData = datarows; plotparcoords(); }
+            function(d) { return { // everyone uses these features
+                
+                area: +d.AREA,
+                perimeter: +d.PERIMETR,
+                smooth: +d.SMOOTH,
+                symmetry: +d.SYMM,
+                fract: +d.FRACT_D }; },
+            function(datarows) {
+                globalData = datarows;
+
+                // --- everyone's animations gets called from this point on --- //
+
+                plotparcoords(globalData
+                    //.map(function(d) {return {area: d.area, symmetry: d.symmetry}})
+                        // SUBSELECTION FOR SHIRLEY PLOT ONCE DAVID HAS MORE FEATURES
+                );
+                plotCells();
+                }
         );
-        var plotparcoords = function() {
-        console.log(globalData);
-        }
         
     </script>
+    <div id="pc1" class="parcoords" style="width:1000px;height:300px"></div>
     <div id="controls"></div>
     <svg width="960" height="500" id="cancerdisp"></svg>
+
+    <script src="parallelcoords2.js"></script>
     <script src="plotcancer.js"></script>
 </body>
 
 </html>
+
