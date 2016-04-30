@@ -30,6 +30,7 @@ var zcolorscale = d3.scale.linear()
   .interpolate(d3.interpolateLab);
 
 // load csv file and create the chart
+var areaavg = 0;
 d3.csv("chemo253pc.csv",
 function(d) {
   data = d.filter(function(row) {
@@ -47,21 +48,27 @@ function(d) {
     .alpha(1)
     .render()
     .brushMode("1D-axes")
-    .reorderable()
-    .interactive() // command-line mode
 
-  // default z-score colored according to the following variable
-  change_color("AREA");
-
-  // click label to activate coloring
-  pc1.svg.selectAll(".dimension")
-    .on("click", change_color)
-    .selectAll(".label")
-    //.style("font-size", "14px");
-
-  // ------------
+  // update on brush event
+  pc1.on("brush",function(d) {
+    var sum = 0;
+    var data1 = d3.nest()
+      .key(function(d) {
+        return d.AREA;
+      })
+      .rollup(function(d) {
+        return d3.sum(d, function(g) {
+          sum += +g.AREA;
+          return g.AREA;
+        })
+      }).entries(d);
+    areaavg = sum / d.length;
+    
+  });
 
 });
+
+  // ------------
 
 // fxn to update color
 function change_color(dimension) { 
