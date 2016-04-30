@@ -42,10 +42,7 @@ control.append("input")
 control.append("span")
     .text(function(d) { return format(d.value); });
 
-var svg = d3.select("body")
-  .append("svg")
-    .attr("width", 960)
-    .attr("height", 500);
+// Create shapes
 
 var shape = d3.superformula()
     .type("cancer")
