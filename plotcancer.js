@@ -1,66 +1,36 @@
+var controlslides = {
+    m1: {s: 10000, m: 10},
+    m2: {s: 10000, m: 10},
+    m3: {s: 10000, m: 10}
+};
+/*
 var types = {
   asterisk: {m: 12, n1: .3, n2: 0, n3: 10, a: 1, b: 1},
   roundedStar: {m: 5, n1: 2, n2: 7, n3: 7, a: 1, b: 1},
   cancer: {m: 10, n1: 6, n2: 6, n3: 7, a: 1, b: 1, s: 1000}
 };
+*/
 
-var startsize = 10000;
-
-var format = d3.format(".4n");
-
-var scale = d3.scale.linear()
-    .domain([-10, 20, 1000])
-    .range([0, 800, 1000]);
-
-var sizescale = d3.scale.linear()
-    .domain([1000, 100000])
-    .range([0, 1000]);
-
-var svg = d3.select("body")
-  .append("svg")
-    .attr("width", 960)
-    .attr("height", 500);
-
-var shape = d3.superformula()
-    .type("cancer")
-    .size(startsize)
-    .segments(3600);
-
-var path = svg.append("path")
-    .attr("class", "big")
-    .attr("transform", "translate(480,250)")
-    .attr("d", shape);
-
-var path2 = svg.append("path")
-    .attr("class", "big")
-    .attr("transform", "translate(280,150)")
-    .attr("d", shape);
-
-var path3 = svg.append("path")
-    .attr("class", "big")
-    .attr("transform", "translate(680,350)")
-    .attr("d", shape);
+// Create controls
 
 var control = d3.select("#controls")
   .selectAll("div")
-    .data(d3.entries(types.cancer))
+    .data(d3.entries(controlslides)
+      .map(function(d) { return d3.entries(d.value); })
+      .reduce(function(d1, d2) { return d1.concat(d2); })
+      )
   .enter().append("div")
     .attr("id", function(d) { return d.key; });
 
+/*
 var sizecontrol = d3.select("#controls")
   .selectAll("div#size").data(d3.entries({size: startsize}))
   .enter().append("div")
     .attr("id", function(d) { return d.key; });
 
-d3.tsv("chemo253.txt", function(c) {return {area: +c.AREA, hormo: +c.HORMO};}, function(d) {
-var pc = d3.parcoords()("#example")
-  .data(d)
-  .render()
-  .createAxes();
-});
-
 sizecontrol.append("label")
     .text(function(d) { return d.key; });
+*/
 
 control.append("label")
     .text(function(d) { return d.key; });
@@ -86,6 +56,46 @@ sizecontrol.append("input")
 
 sizecontrol.append("span")
     .text(function(d) { return format(d.value); });
+
+
+
+
+var startsize = 10000;
+
+var format = d3.format(".4n");
+
+var scale = d3.scale.linear()
+    .domain([-10, 20, 1000])
+    .range([0, 800, 1000]);
+
+var sizescale = d3.scale.linear()
+    .domain([1000, 100000])
+    .range([0, 1000]);
+
+var svg = d3.select("body")
+  .append("svg")
+    .attr("width", 960)
+    .attr("height", 500);
+
+var shape = d3.superformula()
+    .type("cancer")
+    .size(controlslides.m1.s)
+    .segments(3600);
+
+var path = svg.append("path")
+    .attr("class", "big")
+    .attr("transform", "translate(480,250)")
+    .attr("d", shape);
+
+var path2 = svg.append("path")
+    .attr("class", "big")
+    .attr("transform", "translate(280,150)")
+    .attr("d", shape);
+
+var path3 = svg.append("path")
+    .attr("class", "big")
+    .attr("transform", "translate(680,350)")
+    .attr("d", shape);
 
 /*
 d3.select("#controls")
