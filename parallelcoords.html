@@ -24,7 +24,7 @@
 d3.csv("chemo253.csv",
 function(d) {
   d = d.filter(function(row) {
-    return row['AREA'] == +1013;
+    return row['AREA'] == 1013;
   });
   console.log(d);
 });
@@ -48,7 +48,8 @@ d3.csv("chemo253.csv",
 function(d) {
   data = d.filter(function(row) {
     var area = +row['AREA'];
-    return 600 <= area && area <= 1000;
+    var fract_d = +row['FRACT_D'];
+    return 900 <= area && area <= 1000 && fract_d > 0.06;
   });
   console.log(data);
   pc1 = d3.parcoords()("#pc1")
@@ -61,7 +62,7 @@ function(d) {
 */
 
 // WORKS WITH PARALLEL COORDINATES!!!!! BUT NOW SELECTED BY COLUMNS, NOT ROWS
-
+/*
 var mydata = null;
 d3.csv('chemo253.csv')
   .row(function(d) { return {area: +d.AREA, texture: +d.TEXTURE}; })
@@ -78,9 +79,28 @@ function mydataisready() {
     .brushMode("1D-axes")
     .reorderable();
 }
+*/
 
+// SCREW IT, JUST EDIT THE CSV FILE TO HAVE THE VARIABLES YOU WANT!!!!
+d3.csv("chemo253pc.csv",
+function(d) {
+  data = d.filter(function(row) {
+    var area = +row['AREA'];
+    var fract_d = +row['FRACT_D'];
+    return 900 <= area && area <= 1000 && fract_d > 0.06;
+  });
+  console.log(data);
+  pc1 = d3.parcoords()("#pc1")
+    .data(data)
+    .alpha(0.35)
+    .render()
+    .brushMode("1D-axes")
+    .reorderable();
+}
+);
 
 // DIDN'T WORK
+/*
 var mydata = null;
 d3.csv('chemo253.csv')
   .filter(function(row) { 
@@ -100,7 +120,7 @@ function mydataisready() {
     .brushMode("1D-axes")
     .reorderable();
 }
-
+*/
 
 // DIDN'T WORK
 /*

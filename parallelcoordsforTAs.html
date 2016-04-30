@@ -19,6 +19,7 @@
 
 <script>
 
+// LOOK HERE #1
 // WORKS WITH PARALLEL COORDINATES!!!!! BUT ONLY SELECTED BY ROWS, NOT COLUMNS 
 /*
 d3.csv("chemo253.csv",
@@ -37,6 +38,7 @@ function(d) {
 );
 */
 
+// LOOK HERE #2
 // WORKS WITH PARALLEL COORDINATES!!!!! BUT NOW SELECTED BY COLUMNS, NOT ROWS
 /*
 var mydata = null;
@@ -55,47 +57,6 @@ function mydataisready() {
     .brushMode("1D-axes")
     .reorderable();
 }
-*/
-
-// load csv file without filtering the columns and create the chart 
-/*
-d3.csv('chemo253.csv', function(d) {
-  pc1 = d3.parcoords()("#pc1")
-    .data(d)
-    .render()
-    .brushMode("1D-axes") // enable brushing
-    .reorderable(); // enables reordering
-  });
-*/
-
-// load csv file, filter columns, and create the chart - method 1
-/*
-d3.csv('chemo253.csv', function(d) {return {area: +d.AREA, texture: +d.TEXTURE};}, function(d) {
-  pc1 = d3.parcoords()("#pc1")
-    .data(d)
-    .render()
-    .brushMode("1D-axes") // enable brushing
-    .reorderable(); // enables reordering
-  });
-*/
-
-// load csv file, filter columns, and create the chart - method 2
-/*
-d3.csv('chemo253.csv')
-  .row(function(d) {
-    return {
-      area: +d.AREA,
-      texture: +d.TEXTURE
-    };
-  })
-  //.get(function(e, data) { console.log(data) });
-  .get(function(e, d) {
-    pc1 = d3.parcoords()("#pc1")
-    .data(d)
-    .render()
-    .brushMode("1D-axes")
-    .reorderable(); 
-  });
 */
 
 </script>
