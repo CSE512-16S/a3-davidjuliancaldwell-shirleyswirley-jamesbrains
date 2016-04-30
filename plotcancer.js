@@ -4,50 +4,12 @@ var controlslides = {
     c3: {s3: 5000, m3: 10}
 };
 
-// Create controls
-
-var scale_m = d3.scale.linear()
-    .domain([0, 20, 40])
-    .range([0, 800, 1000]);
-
-var scale_s = d3.scale.linear()
-    .domain([1000, 100000])
-    .range([0, 1000]);
-
-var format = d3.format(".2g");
-
 // Generate plot 
 
 var plotCells = function(globalData)
 {
     controlslides = pullcelldata(globalData);
 
-    var control = d3.select("div#controls")
-      .selectAll("div")
-        .data(d3.entries(controlslides)
-          .map(function(d) { return d3.entries(d.value); })
-          .reduce(function(d1, d2) { return d1.concat(d2); })
-          )
-      .enter().append("div")
-        .attr("id", function(d) { return d.key; });
-    
-    control.append("label")
-        .text(function(d) { return d.key; });
-    
-    control.append("input")
-        .attr("type", "range")
-        .attr("max", 1000)
-        .attr("min", 0)
-        .property("value", function(d) {
-           if(d.key.indexOf("s") > -1) return scale_s(d.value);
-           else if(d.key.indexOf("m") > -1) return scale_m(d.value);
-           })
-        .on("change", slidechanged)
-        .on("input", slidechanged);
-    
-    control.append("span")
-        .text(function(d) { return format(d.value); });
-    
     // Create shapes
     
     function get_svals(d) {
@@ -124,21 +86,3 @@ function brushchanged(brushdata_in) {
     updatesel.attr("d", shape);
 }
 
-function slidechanged(d) {
-
-    updatesel = d3.select("svg#cancerdisp")
-        .selectAll("path")
-        .data(d3.entries(controlslides)
-            .map(function(d, dind) { return [d.key, dind, d.value]; }))
-
-    if(d.key.indexOf("s") > -1) {
-        var v = scale_s.invert(this.value);
-    }
-    else if(d.key.indexOf("m") > -1) {
-        var v = scale_m.invert(this.value);
-    }
-
-    controlslides["c"+d.key.substr(1)][d.key] = v;
-    updatesel.attr("d", shape);
-    d3.select(this.nextSibling).text(format(v));
-}
