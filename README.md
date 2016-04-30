@@ -29,7 +29,9 @@ Access our visualization at http://cse512-16s.github.io/a3-davidjuliancaldwell-s
 
 ## Story Board
 
-?????Put either your storyboard content or a [link to your storyboard pdf file](storyboard.pdf?raw=true) here. Just like A2, you can use any software to create a *reasonable* pdf storyboard.
+![](storyboardfinal.jpg)
+
+Put either your storyboard content or a [link to your storyboard pdf file](storyboard.pdf?raw=true) here. Just like A2, you can use any software to create a *reasonable* pdf storyboard.
 
 ### Changes between Storyboard and the Final Implementation
 
@@ -42,24 +44,19 @@ In the end, we persevered and figured out how to get parallel coordinates brushi
 ## Development Process
 
 - Breakdown of how work was split among group members:
-  -*James* created the idealized cell representation component to visually represent the variance and mean cell areas and fractal dimensions of the selected patients, which involved ...?????. 
-  -*David* created the sortable boolean patient characteristic component, which involved ...?????
-  -*Shirley* applied different capabilties of the parallel coordinates library to create the re-ordable, colored, and interactive components of the parallel coordinates component.
-  -*Shirley* got the brushing on the parallel coordinates to talk to the other components.
-  -*James* integrated all of the code together into one final tidy html page.
-  -All 3 of us put together this writeup. 
+..*James* created the idealized cell representation component to visually represent the variance and mean cell areas and fractal dimensions of the selected patients, which involved ...?????. 
+..*David* created the sortable boolean patient characteristic component, which involved ...?????
+..*Shirley* applied different capabilties of the parallel coordinates library to create the re-ordable, colored, and interactive components of the parallel coordinates component.
+..*Shirley* got the brushing on the parallel coordinates to talk to the other components.
+..*James* integrated all of the code together into one final tidy html page.
+..All 3 of us put together this writeup. 
 
 - Time spent developing our application:
-  -*James* spent about ????? 
-  -*David* spent about ?????
-  -*Shirley* spent a couple hours working with and understanding the parallel coordinates library 
+..*James* spent about ????? 
+..*David* spent about ?????
+..*Shirley* spent a couple hours working with and understanding the parallel coordinates library 
 
 - Aspects taking the most time included:
-  - DEBUGGING.
-  - Learning javasc
-
-Include:
-- Breakdown of how the work was split among the group members.
-- A commentary on the development process, including answers to the following questions:
-  - Roughly how much time did you spend developing your application?
-  - What aspects took the most time?
+..DEBUGGING
+..Learning JavaScript and D3 from scratch, in general
+..Getting our components to talk to each other
