@@ -31,6 +31,7 @@ var zcolorscale = d3.scale.linear()
 
 // load csv file and create the chart
 var areaavg = 0;
+var fract_davg = 0;
 d3.csv("chemo253pc.csv",
 function(d) {
   data = d.filter(function(row) {
@@ -51,50 +52,26 @@ function(d) {
 
   // update on brush event
   pc1.on("brush",function(d) {
-    var sum = 0;
+    var areasum = 0;
+    var fract_dsum = 0;
     var data1 = d3.nest()
       .key(function(d) {
         return d.AREA;
       })
       .rollup(function(d) {
         return d3.sum(d, function(g) {
-          sum += +g.AREA;
-          return g.AREA;
+          areasum += +g.AREA;
+          fract_dsum += +g.FRACT_D;
         })
       }).entries(d);
-    areaavg = sum / d.length;
+
+    areaavg = areasum / d.length;
+    fract_davg = fract_dsum / d.length;
     
   });
-
-});
-
   // ------------
 
-// fxn to update color
-function change_color(dimension) { 
-  pc1.svg.selectAll(".dimension")
-    .style("font-weight", "normal")
-    .filter(function(d) { return d == dimension; })
-    .style("font-weight", "bold")
-
-  pc1.color(zcolor(pc1.data(),dimension)).render()
-}
-
-// fxn to return color function based on plot and dimension
-function zcolor(col, dimension) {
-  var z = zscore(_(col).pluck(dimension).map(parseFloat))
-  return function(d) { return zcolorscale(z(d[dimension])) }
-};
-
-// fxn to color by zscore
-function zscore(col) {
-  var n = col.length,
-      mean = _(col).mean(),
-      sigma = _(col).stdDeviation();
-  return function(d) {
-    return (d-mean)/sigma;
-  };
-};
+});
 
 </script>
 
