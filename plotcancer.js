@@ -78,7 +78,7 @@ var plotCells = function(globalData)
             .attr("transform", function(d) {
                 return "translate("+
                 //(580-d[1]*150)+","+(200+d[1]*100)+
-                (580)+","+(100+d[1]*125)+
+                (200)+","+(200+d[1]*125)+
                 ")"
                 })
             .attr("id", function(d) {return d[0];})
