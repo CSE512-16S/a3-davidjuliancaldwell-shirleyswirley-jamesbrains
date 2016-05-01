@@ -1,18 +1,5 @@
-
 var dataset;
 
-var mapFunction = d3.map();
-
-/*    d3.tsv("chemo253.txt", function(data) {
- return {
- RADIUS: +data.RADIUS
- };
- }, function(data){
- dataset = data;
- console.log(dataset[0])
- });*/
-
-//Width and height
 var w = 1000;
 var h = 1000;
 
@@ -26,7 +13,7 @@ var div = d3.select("body").append("div")
 var pxOff = 10;
 
 d3.tsv("chemo253.txt",
-    function(data) {
+    function (data) {
 
         dataset = data;
         console.log(data[0]);
@@ -64,9 +51,9 @@ d3.tsv("chemo253.txt",
                 div.transition()
                     .duration(200)
                     .style("opacity", .9);
-                div.html("Survival time  " + d.TIME_B + "\n" )
-                    .style("left", (d3.event.pageX)+ pxOff + "px" )
-                    .style("top", (d3.event.pageY - 28)+ pxOff + "px" );
+                div.html("Survival time  " + d.TIME_B + "\n")
+                    .style("left", (d3.event.pageX) + pxOff + "px")
+                    .style("top", (d3.event.pageY - 28) + pxOff + "px");
                 /*d3.select(this)
                  .transition()
                  .duration(250)
@@ -132,25 +119,25 @@ d3.tsv("chemo253.txt",
                     })
                     .duration(100)
                     .attr("stroke", function (d) {
-                            if (d.CHEMO == '0')
-                                return "green";
-                            else {
-                                return "black"
-                            }
+                        if (d.CHEMO == '0')
+                            return "green";
+                        else {
+                            return "black"
+                        }
 
                     })
                     .attr("stroke-width", function (d) {
 
-                            if (d.CHEMO == '0')
-                                return 6;
-                            else {
-                                return 4;
-                            }
+                        if (d.CHEMO == '0')
+                            return 6;
+                        else {
+                            return 4;
+                        }
 
                     })
                 ;
             }
-            else{
+            else {
                 pathP
                     .transition()
                     .delay(function (d, i) {
@@ -158,13 +145,11 @@ d3.tsv("chemo253.txt",
                     })
                     .duration(100)
                     .attr("stroke", "black")
-                    .attr("stroke-width",4)
+                    .attr("stroke-width", 4)
             }
 
 
-
-        };
-
+        }
         d3.select("#died").on("change", change2);
         var highlightOrder2 = false;
 
@@ -179,20 +164,20 @@ d3.tsv("chemo253.txt",
                     .duration(100)
                     .attr("stroke", function (d) {
 
-                            if (d.CODE_B == '0')
-                                return "cyan";
-                            else {
-                                return "black"
-                            }
+                        if (d.CODE_B == '0')
+                            return "cyan";
+                        else {
+                            return "black"
+                        }
 
                     })
                     .attr("stroke-width", function (d) {
 
-                            if (d.CODE_B == '0')
-                                return 6;
-                            else {
-                                return 4;
-                            }
+                        if (d.CODE_B == '0')
+                            return 6;
+                        else {
+                            return 4;
+                        }
 
                     })
             }
@@ -204,17 +189,16 @@ d3.tsv("chemo253.txt",
                     })
                     .duration(100)
                     .attr("stroke", "black")
-                    .attr("stroke-width",4)
+                    .attr("stroke-width", 4)
             }
 
-        };
-
+        }
         d3.select("#survivalTime").on("change", change3);
         var survivalOrder = false;
 
         function change3() {
             survivalOrder = !survivalOrder;
-            if (survivalOrder){
+            if (survivalOrder) {
                 pathP
                     .transition()
                     .delay(function (d, i) {
@@ -234,7 +218,7 @@ d3.tsv("chemo253.txt",
                         return i * 10;
                     })
                     .duration(100)
-                    .attr("fill","white")
+                    .attr("fill", "white")
             }
-        };
+        }
     });
