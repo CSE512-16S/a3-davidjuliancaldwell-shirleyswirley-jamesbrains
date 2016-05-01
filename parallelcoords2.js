@@ -36,6 +36,7 @@ var plotparcoords = function(subset_of_data, hide_these_axes)
 
     brushchanged(d); // use this brush to update James's plot
      // use this to update David's plot
+    plotPatients(d);
   });
 
 }
