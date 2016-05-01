@@ -1,24 +1,66 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>D3 Page Template</title>
-    <script type="text/javascript" src="d3/d3.js"></script>
-    <link rel="stylesheet" type="text/css" href="davidStyles.css">
+    <meta content="text/html; charset=utf-8" />
+    <title>Cancer plotter</title>
+
+    <link rel="stylesheet" type="text/css" href="controlstyles.css" />
+    <link rel="stylesheet" type="text/css" href="https://syntagmatic.github.io/parallel-coordinates/d3.parcoords.css" />
+
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="superformula.js"></script>
+    <script src="https://syntagmatic.github.io/parallel-coordinates/d3.parcoords.js"></script>
+    <script src="https://syntagmatic.github.io/parallel-coordinates/examples/lib/underscore.js"></script>
+    <script src="https://syntagmatic.github.io/parallel-coordinates/examples/lib/underscore.math.js"></script>
+    <script src="https://syntagmatic.github.io/parallel-coordinates/examples/lib/divgrid.js"></script>
 </head>
 
 <body>
+    <script>
+        var globalData = []; // everyone use this data saveout
 
+        d3.tsv("chemo253.txt",
 
-<label id="chemo1"><input type="checkbox">Chemo1</label>
-<label id="died"><input type="checkbox">Death due to cancer</label>
+            // ACCESSOR: everyone uses these features; already parsed to nums
+            function(d) { return {
+                patient: +d.PATIENT,
+                code_a: +d.CODE_A,
+                area: +d.AREA,
+                texture: +d.TEXTURE,
+                perimeter: +d.PERIMETR,
+                smooth: +d.SMOOTH,
+                concave: +d.CONCV,
+                symmetry: +d.SYMM,
+                fract: +d.FRACT_D,
+                sarea: +d.SAREA,
+                sfract: +d.SFRACT_D,
+                }; },
 
-<p id="remove">Click me! - Remove people who match ....</p>
+            // CALLBACK: starts running
+            function(datarows) {
+                globalData = datarows;
 
-<p id="directions">Click on a person to sort by Survival Time</p>
+                // --- everyone's animations gets called from this point on --- //
 
+                // establish Shirley's plot
+                        // second parameter is what axes to hide from the parallel coords
+                plotparcoords(globalData,   
+                    ["patient", "code_a", "sarea", "sfract"]); 
 
-<script type="text/javascript" src ="davidScripts.js"></script>
+                // establish James's plot
+                plotCells(globalData); // establish James's plot
+                }
+        );
+        
+    </script>
+    <div id="pc1" class="parcoords" style="width:1000px;height:300px"></div>
+    <div id="controls"></div>
+    <svg width="960" height="500" id="cancerdisp"></svg>
 
+    <script src="parallelcoords2.js"></script>
+    <script src="plotcancer.js"></script>
 </body>
+
 </html>
+
