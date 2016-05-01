@@ -11,24 +11,23 @@ var scalearea = d3.scale.linear()
 var scalefract = d3.scale.linear()
     .domain([0, 0.125])
     .range([0, 30]);
-var formatcelltext = d3.format(".4g");
+
+function get_svals(d) {
+    return d3.entries(d[2])
+        .map(function(d) {return d.value;})
+        .reduce(function(d1, d2) { return d1; } )
+}
+function get_mvals(d) {
+    return d3.entries(d[2])
+        .map(function(d) {return d.value;})
+        .reduce(function(d1, d2) { return d2; } )
+}
 
 var plotCells = function(globalData)
 {
     controlslides = pullcelldata(globalData);
 
     // Create shapes
-    
-    function get_svals(d) {
-        return d3.entries(d[2])
-            .map(function(d) {return d.value;})
-            .reduce(function(d1, d2) { return d1; } )
-    }
-    function get_mvals(d) {
-        return d3.entries(d[2])
-            .map(function(d) {return d.value;})
-            .reduce(function(d1, d2) { return d2; } )
-    }
     
     shape = d3.superformula()
         .type("cancer")
@@ -63,12 +62,31 @@ var plotCells = function(globalData)
             })
 
     cancerdispd3.append("text")
-        .attr("x", function(d) { return 175; })
+        .attr("id", "labeltext")
+        .attr("x", function(d) { return 170; })
+        .attr("font-family", "sans-serif")
         .attr("y", function(d) {
-            return (200+d[1]*125);
+            return (180+d[1]*125);
             })
+        .attr("font-size", "14px")
         .text(function(d) {
-            return "size: "+formatcelltext((scalearea.invert(get_mvals(d))))+"\n";
+            if(d[1] == 0)
+                return "-2Z";
+            else if(d[1] == 1)
+                return "median";
+            else if(d[1] == 2)
+                return "+2Z";
+        });
+
+    cancerdispd3.append("text")
+        .attr("id", "dyntext")
+        .attr("font-family", "sans-serif")
+        .attr("x", function(d) { return 160; })
+        .attr("y", function(d) {
+            return (220+d[1]*125);
+            })
+        .attr("font-size", "12px")
+        .text(function(d) { return formatcelltext(d, "s")+" | "+formatcelltext(d, "m");
         });
 }
 
@@ -86,6 +104,17 @@ function pullcelldata(data_in) {
     };
 }
 
+var formatcelltext = function(d, type) {
+    if(type == "s") {
+        format4 = d3.format(".4g");
+        return format4(scalearea.invert(get_svals(d)));
+    }
+    else if(type == "m") {
+        format2 = d3.format(".2g");
+        return format2(scalefract.invert(get_mvals(d)));
+    }
+}
+
 function brushchanged(brushdata_in) {
     controlslides = pullcelldata(brushdata_in);
 
@@ -95,5 +124,12 @@ function brushchanged(brushdata_in) {
             .map(function(d, dind) { return [d.key, dind, d.value]; }))
 
     updatesel.attr("d", shape);
+
+    updatetext = d3.select("svg#cancerdisp")
+        .selectAll("text#dyntext")
+        .data(d3.entries(controlslides)
+            .map(function(d, dind) { return [d.key, dind, d.value]; }))
+            .text(function(d) {
+                return formatcelltext(d, "s")+" | "+formatcelltext(d, "m"); })
 }
 
