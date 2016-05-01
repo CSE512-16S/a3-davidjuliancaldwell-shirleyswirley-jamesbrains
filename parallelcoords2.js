@@ -4,13 +4,9 @@ var zcolorscale = d3.scale.linear()
   .range(["brown", "#999", "#999", "steelblue"])
   .interpolate(d3.interpolateLab);
 
-// load csv file and create the chart
-var areaavg;
-var fract_davg;
-
 var plotparcoords = function(subset_of_data, hide_these_axes)
 {
-  // console.log(subset_of_data)
+  patientsubsetData = globalData;
   // ------------
   // PARALLEL COORDINATES
   pc1 = d3.parcoords()("#pc1")
@@ -28,7 +24,10 @@ var plotparcoords = function(subset_of_data, hide_these_axes)
   // update on brush event
   // click label to activate coloring
   pc1.svg.selectAll(".dimension")
-    .on("click", change_color)
+    .on("click", function(d) {
+        change_color(d);
+        sortaxisby(d, patientsubsetData);
+        })
     .selectAll(".label")
 
   // calculate means on brushed data
@@ -36,6 +35,7 @@ var plotparcoords = function(subset_of_data, hide_these_axes)
 
     brushchanged(d); // use this brush to update James's plot
      // use this to update David's plot
+    patientsubsetData = d;
     plotPatients(d);
   });
 

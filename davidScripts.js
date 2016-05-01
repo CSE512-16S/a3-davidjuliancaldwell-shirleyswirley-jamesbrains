@@ -8,7 +8,7 @@ var pxOff = 10;
 
 // dynamic plotter here
 var plotPatients = function(data_in) {
-    
+
     //JOIN
     var svgdatajoin = d3.select("svg#patientdisp")
         .selectAll("path#patientfig")
@@ -70,8 +70,23 @@ var timebfill = function(d) {
 var defaulttransform = function(d, i) {
     return "scale(0.4) translate(" + (i % 40) * 40 + "," + Math.floor(i / 40) * 150 + ")";
 }
-    
-    /*
+
+var sortaxisby = function(dim, data) {
+
+    var id = 0;
+    for (var i = 0; i < data.length; i++) data[i].id = id++;
+    data.sort(function(a, b) {
+        return d3.ascending(a[dim], b[dim])
+    });
+    d3.select("svg#patientdisp")
+        .selectAll("path#patientfig")
+        .data(data).transition()
+        .attr("transform", function (d) {
+            return defaulttransform(d, d.id);
+        })
+}
+
+/*
     
 //Define sort order flag
 var sortOrder = false;
