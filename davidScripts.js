@@ -4,7 +4,7 @@ var divTooltip = d3.select("body").append("div")
     .style("opacity", 0);
 
 // control the look of the ppl   
-var numppl = 25; // set number of ppl shown per row
+var numppl = 30; // set number of ppl shown per row
 var pplwidth = 40; // horiz spacing btwn indiv ppl
 var pplht = 110; // vertical spacing btwn ppl rows
 
