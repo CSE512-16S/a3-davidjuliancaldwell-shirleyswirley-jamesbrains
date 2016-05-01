@@ -1,24 +1,87 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>D3 Page Template</title>
-    <script type="text/javascript" src="d3/d3.js"></script>
+    <meta content="text/html; charset=utf-8" />
+    <title>Cancer plotter</title>
+
+    <link rel="stylesheet" type="text/css" href="controlstyles.css" />
+    <link rel="stylesheet" type="text/css" href="https://syntagmatic.github.io/parallel-coordinates/d3.parcoords.css" />
     <link rel="stylesheet" type="text/css" href="davidStyles.css">
+
+    <script src="//d3js.org/d3.v3.min.js"></script>
+    <script src="superformula.js"></script>
+    <script src="https://syntagmatic.github.io/parallel-coordinates/d3.parcoords.js"></script>
+    <script src="https://syntagmatic.github.io/parallel-coordinates/examples/lib/underscore.js"></script>
+    <script src="https://syntagmatic.github.io/parallel-coordinates/examples/lib/underscore.math.js"></script>
+    <script src="https://syntagmatic.github.io/parallel-coordinates/examples/lib/divgrid.js"></script>
 </head>
 
 <body>
+<script>
+    var globalData = []; // everyone use this data saveout
+
+    d3.tsv("chemo253.txt",
+
+            // ACCESSOR: everyone uses these features; already parsed to nums
+            function(d) { return {
+                patient: +d.PATIENT,
+                code_a: +d.CODE_A,
+                area: +d.AREA,
+                texture: +d.TEXTURE,
+                perimeter: +d.PERIMETR,
+                smooth: +d.SMOOTH,
+                concave: +d.CONCV,
+                symmetry: +d.SYMM,
+                fract: +d.FRACT_D,
+                sarea: +d.SAREA,
+                sfract: +d.SFRACT_D,
+                CHEMO: d.CHEMO,
+                CODE_B: d.CODE_B,
+                TIME_B: d.TIME_B,
+            }; },
+
+            // CALLBACK: starts running
+            function(datarows) {
+                globalData = datarows;
+
+                // --- everyone's animations gets called from this point on --- //
+
+                // establish Shirley's plot
+                // second parameter is what axes to hide from the parallel coords
+                plotparcoords(globalData,
+                        ["patient", "code_a", "sarea", "sfract", "CHEMO", "CODE_B", "TIME_B"]);
+
+                // establish James's plot
+                plotCells(globalData); // establish James's plot
+
+                //establish David's plot
+                plotPatients(globalData); //establish David's stuff
+            }
+    );
+
+</script>
+<div id="pc1" class="parcoords" style="width:1000px;height:300px"></div>
+
+<svg width="650" height="400" id="patientdisp"></svg>
+
+<svg width="400" height="600" id="cancerdisp"></svg>
+
+<p id="overviewDavid">Click on the checkboxes to </p>
+<label id="chemo1"><input type="checkbox">Highlight patients who received 1st round of Chemotherapy</label>
+<br>
+<label id="died"><input type="checkbox">Highlight deaths due to cancer</label>
+<br>
+<label id="survivalTime"><input type="checkbox">Fill in patients by survival time - lighter is survived longer</label>
+
+<p id="directions">Click on a person to sort by Survival Time. Please wait until each action is completed before clicking another box <br> <br>
+    Mouse over to display survival time</p>
 
 
-<label id="chemo1"><input type="checkbox">Chemo1</label>
-<label id="died"><input type="checkbox">Death due to cancer</label>
-
-<p id="remove">Click me! - Remove people who match ....</p>
-
-<p id="directions">Click on a person to sort by Survival Time</p>
-
-
-<script type="text/javascript" src ="davidScripts.js"></script>
-
+<script src="parallelcoords2.js"></script>
+<script src="davidScripts.js"></script>
+<script src="plotcancer.js"></script>
 </body>
+
 </html>
+
