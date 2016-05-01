@@ -71,11 +71,11 @@ var plotCells = function(globalData)
         .attr("font-size", "14px")
         .text(function(d) {
             if(d[1] == 0)
-                return "+2Z";
+                return "+2 st. dev";
             else if(d[1] == 1)
                 return "median";
             else if(d[1] == 2)
-                return "-2Z";
+                return "-2 st. dev";
         });
 
     cancerdispd3.append("text")
