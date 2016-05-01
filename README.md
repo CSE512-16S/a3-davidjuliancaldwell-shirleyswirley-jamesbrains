@@ -17,11 +17,14 @@ Dr. Wolberg from the University of Wisconsin, and Professor Olvi Mangasarian fro
 
 We decided that this would be a fun data set to visualize because of the possibilities for interesting pictorial representations of patients and cells, in addition to the fact that the data itself are very well-curated and complete.
 
-Our final visualization has 3 components, which all talk to each other. At the top, we have a parallel coordinates chart with lines (each corresponding to a different patient) colored by z-score according to the selected axis as well as reorderable and brushable axes.
+Our final visualization has 3 components, which all talk to each other. At the top, we have a parallel coordinates chart with lines (each corresponding to a different patient) colored by z-score according to the clicked/bolded axis as well as reorderable and brushable axes.
+
 Brushed data is then sent to our second component, which is a pictorial representation of patient's cells (in particular, their area and fractal dimension).
-In this idealized represntation of patient cells, the cell in the middle encodes the median cell area and fractal dimension of the brush-selected patients, while the cells on either side of it encode the median individual standard deviations of cell area and fractal dimension among the same brush-selected patients (minus 1 z-score on the left, plus 1 z-score on the right).     
-The brushed data is also sent to our third component, which is a sortable, colorable by nominal boolean variables pictorial representation of brush-selected patients. These nominalvariables include whether the patient died or survived and whether they underwent chemo or not.   
-Our 3 components together help us to understand how observed cell properties are related to one another as well as how they can help predict and diagnose breast cancer outcomes.  
+In this idealized represntation of patient cells, the cell in the middle encodes the median cell area and fractal dimension of the brush-selected patients, while the cells on either side of it encode the median individual standard deviations of cell area and fractal dimension among the same brush-selected patients (minus 2 z-scores on the left, plus 2 z-scores on the right).     
+
+The brushed data is also sent to our third component, which is a pictorial representation of brush-selected patients. The patients are ascendingly sorted by the clicked/bolded parallel coordinate axis. Their fill color encodes their survival time, while their outline color encodes whether they underwent chemotherapy or not. 
+
+Our 3 components together help us to understand how observed cell properties are related to one another as well as to the prognostic survival time.  
 
 ## Running Instructions
 
@@ -39,14 +42,14 @@ Along the way, there was a period of time where we had abandoned this idea becau
 
 In the end, we persevered and figured out how to get parallel coordinates brushing able to send the brushed data to our other components, so we were able to stick to our original plan. 
 
+We also originally wanted to have the user be able to choose what they wanted the pictorial patients to be colored and/or outlined by, which we got working in the stand-alone component, but did not end up integrating into the final full visualization.   
+
 ## Development Process
 
 * Breakdown of how work was split among group members:
-  * **James** created the idealized cell representation component to visually represent the variance and mean cell areas and fractal dimensions of the selected patients, which involved ...?????. 
+  * **James** created the idealized cell representation component to visually represent the variance and mean cell areas and fractal dimensions of the selected patients, which involved ...?????. He also did the bulk of the work integrating all of our code sets together into one functional visualizaion. 
   * **David** created the sortable boolean patient characteristic component, which involved ...?????
-  * **Shirley** applied different capabilties of the parallel coordinates library to create the re-ordable, colored, and interactive components of the parallel coordinates component.
-  * **Shirley** got the brushing on the parallel coordinates to talk to the other components.
-  * **James** integrated all of the code together into one final tidy html page.
+  * **Shirley** applied different capabilties of the parallel coordinates library to create the re-ordable, colored, and interactive components of the parallel coordinates component. She also got the brushing on the parallel coordinates to talk to the other components, helped sort the pictorial patients based on the clicked parallel axis, and put together the final html page. 
   * All 3 of us put together this writeup. 
 
 * Time spent developing our application:
@@ -54,7 +57,7 @@ In the end, we persevered and figured out how to get parallel coordinates brushi
   * All 3 of us spent a couple hours coming up with visualization ideas and storyboarding together.
   * **James** spent about ????? 
   * **David** spent about ?????
-  * **Shirley** spent a couple hours working with and understanding the parallel coordinates library. She spent another couple hours figuring out how to filter and select read-in csv files. She spent another couple hours figuring out how to deal with brushed data and sending that between components. 
+  * **Shirley** spent a couple hours working with and understanding the parallel coordinates library, another couple hours figuring out how to filter and select read-in csv files, another couple hours figuring out how to deal with brushed data and sending that between components, another hour sorting patients based on parallel coordinate interactions, and another couple hours arranging html elements. 
 
 * Aspects taking the most time included:
   * DEBUGGING

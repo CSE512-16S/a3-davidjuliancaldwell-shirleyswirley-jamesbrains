@@ -92,8 +92,8 @@ var plotCells = function(globalData)
 
 function pullcelldata(data_in) {
 
-    marea = d3.median(data_in.map(function(d) {return d.area}));
-    mfract = d3.median(data_in.map(function(d) {return d.fract}));
+    marea = d3.median(data_in.map(function(d) {return d.Area}));
+    mfract = d3.median(data_in.map(function(d) {return d.Fractal_Dimension}));
     sdarea = d3.median(data_in.map(function(d) {return d.sarea}));
     sdfract = d3.median(data_in.map(function(d) {return d.sfract}));
 

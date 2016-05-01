@@ -19,7 +19,7 @@ var plotparcoords = function(subset_of_data, hide_these_axes)
     .interactive()
 
   // default z-score colored according to the following variable
-  change_color("area");
+  change_color("Area");
 
   // update on brush event
   // click label to activate coloring
