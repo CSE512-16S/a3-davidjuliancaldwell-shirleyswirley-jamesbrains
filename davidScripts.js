@@ -48,14 +48,14 @@ d3.tsv("chemo253.txt",
             .attr("stroke-width", 4)
             .attr("stroke", function (d) {
                 if (d.CODE_B == '0')
-                    return "magenta";
+                    return "black";
                 else
-                    return "orange"
+                    return "black"
             })
             .attr("fill", function (d) {
                 //return "rgb(0, 0, " + (+d.TIME_B * 10) + ")";
-                return "rgb(" + (+d.TIME_B * 2  ) + ", " + (+d.TIME_B * 2 ) + ", " + (+d.TIME_B * 2 ) + ")";
-
+                //return "rgb(" + (+d.TIME_B * 2  ) + ", " + (+d.TIME_B * 2 ) + ", " + (+d.TIME_B * 2 ) + ")";
+                return "white";
             })
             .attr("transform", function (d, i) {
                 return "scale(0.4) translate(" + (i % 40) * 40 + "," + Math.floor(i / 40) * 150 + ")";
@@ -108,9 +108,9 @@ d3.tsv("chemo253.txt",
                 })
                 .transition()
                 .delay(function (d, i) {
-                    return i * 25;
+                    return i * 10;
                 })
-                .duration(5000)
+                .duration(1500)
                 .attr("transform", function (d, i) {
                     return "scale(0.4) translate(" + (i % 40) * 40 + "," + Math.floor(i / 40) * 150 + ")";
                 })
@@ -123,26 +123,43 @@ d3.tsv("chemo253.txt",
 
         function change() {
             highlightOrder = !highlightOrder;
+            if (highlightOrder) {
 
-            pathP
-                .transition()
-                .delay(function (d, i) {
-                    return i * 50;
-                })
-                .duration(500)
-                .attr("stroke", function (d) {
-                    if (highlightOrder) {
-                        if (d.CHEMO == '0')
-                            return "green";
-                        else
-                            return "cyan"
-                    } else {
-                        if (d.CODE_B == '0')
-                            return "magenta";
-                        else
-                            return "orange"
-                    }
-                });
+                pathP
+                    .transition()
+                    .delay(function (d, i) {
+                        return i * 10;
+                    })
+                    .duration(100)
+                    .attr("stroke", function (d) {
+                            if (d.CHEMO == '0')
+                                return "green";
+                            else {
+                                return "black"
+                            }
+
+                    })
+                    .attr("stroke-width", function (d) {
+
+                            if (d.CHEMO == '0')
+                                return 6;
+                            else {
+                                return 4;
+                            }
+
+                    })
+                ;
+            }
+            else{
+                pathP
+                    .transition()
+                    .delay(function (d, i) {
+                        return i * 10;
+                    })
+                    .duration(100)
+                    .attr("stroke", "black")
+                    .attr("stroke-width",4)
+            }
 
 
 
@@ -153,34 +170,71 @@ d3.tsv("chemo253.txt",
 
         function change2() {
             highlightOrder2 = !highlightOrder2;
-            pathP
-                .transition()
-                .delay(function (d, i) {
-                    return i * 50;
-                })
-                .duration(500)
-                .attr("stroke", function (d) {
-                    if (highlightOrder2) {
-                        if (d.CODE_B == '0')
-                            return "yellow";
-                        else
-                            return "pink"
-                    } else {
-                        if (d.CODE_B == '0')
-                            return "magenta";
-                        else
-                            return "orange"
-                    }
-                })
-                .attr("fill", function (d) {
-                    if(highlightOrder2) {
-                        if (d.CODE_B == '0') {
-                            return "white"
-                        }
-                    }
-                })
+            if (highlightOrder2) {
+                pathP
+                    .transition()
+                    .delay(function (d, i) {
+                        return i * 10;
+                    })
+                    .duration(100)
+                    .attr("stroke", function (d) {
+
+                            if (d.CODE_B == '0')
+                                return "cyan";
+                            else {
+                                return "black"
+                            }
+
+                    })
+                    .attr("stroke-width", function (d) {
+
+                            if (d.CODE_B == '0')
+                                return 6;
+                            else {
+                                return 4;
+                            }
+
+                    })
+            }
+            else {
+                pathP
+                    .transition()
+                    .delay(function (d, i) {
+                        return i * 10;
+                    })
+                    .duration(100)
+                    .attr("stroke", "black")
+                    .attr("stroke-width",4)
+            }
+
         };
 
+        d3.select("#survivalTime").on("change", change3);
+        var survivalOrder = false;
 
-
+        function change3() {
+            survivalOrder = !survivalOrder;
+            if (survivalOrder){
+                pathP
+                    .transition()
+                    .delay(function (d, i) {
+                        return i * 10;
+                    })
+                    .duration(100)
+                    .attr("fill", function (d) {
+                        //return "rgb(0, 0, " + (+d.TIME_B * 10) + ")";
+                        return "rgb(" + (+d.TIME_B * 2  ) + ", " + (+d.TIME_B * 2 ) + ", " + (+d.TIME_B * 2 ) + ")";
+                    })
+                ;
+            }
+            else {
+                pathP
+                    .transition()
+                    .delay(function (d, i) {
+                        return i * 10;
+                    })
+                    .duration(100)
+                    .attr("fill","white")
+            }
+        };
     });
