@@ -3,6 +3,11 @@ var divTooltip = d3.select("body").append("div")
     .attr("class", "tooltip")
     .style("opacity", 0);
 
+// control the look of the ppl   
+var numppl = 30; // set number of ppl shown per row
+var pplwidth = 40; // horiz spacing btwn indiv ppl
+var pplht = 110; // vertical spacing btwn ppl rows
+
 // set pixel offset for the mouseover
 var pxOff = 10;
 
@@ -68,7 +73,7 @@ var timebfill = function(d) {
     return "rgb(" + (+d.TIME_B * 2  ) + ", " + (+d.TIME_B * 2 ) + ", " + (+d.TIME_B * 2 ) + ")";
 }
 var defaulttransform = function(d, i) {
-    return "scale(0.4) translate(" + (i % 40) * 40 + "," + Math.floor(i / 40) * 150 + ")";
+    return "scale(0.4) translate(" + (i % numppl) * pplwidth + "," + Math.floor(i / numppl) * pplht + ")";
 }
 
 var sortaxisby = function(dim, data) {
@@ -109,7 +114,7 @@ var sortOrder = false;
                 })
             .duration(1500)
             .attr("transform", function (d, i) {
-                return "scale(0.4) translate(" + (i % 40) * 40 + "," + Math.floor(i / 40) * 150 + ")";
+                return "scale(0.4) translate(" + (i % numppl) * pplwidth + "," + Math.floor(i / numppl) * pplht + ")";
             });
         };
     

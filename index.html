@@ -8,6 +8,15 @@
     <link rel="stylesheet" type="text/css" href="controlstyles.css" />
     <link rel="stylesheet" type="text/css" href="https://syntagmatic.github.io/parallel-coordinates/d3.parcoords.css" />
     <link rel="stylesheet" type="text/css" href="davidStyles.css">
+    <style>
+    h1 { color: #111; font-family: 'Helvetica Neue', sans-serif; font-size: 40px; font-weight: bold; letter-spacing: -1px; line-height: 1; text-align: center; }
+    .center {
+        margin: auto;
+        width: 60%;
+        // border: 3px solid #73AD21;
+        padding: 0px;
+    }
+    </style>
 
     <script src="//d3js.org/d3.v3.min.js"></script>
     <script src="superformula.js"></script>
@@ -15,6 +24,7 @@
     <script src="https://syntagmatic.github.io/parallel-coordinates/examples/lib/underscore.js"></script>
     <script src="https://syntagmatic.github.io/parallel-coordinates/examples/lib/underscore.math.js"></script>
     <script src="https://syntagmatic.github.io/parallel-coordinates/examples/lib/divgrid.js"></script>
+
 </head>
 
 <body>
@@ -27,13 +37,13 @@
             function(d) { return {
                 patient: +d.PATIENT,
                 code_a: +d.CODE_A,
-                area: +d.AREA,
-                texture: +d.TEXTURE,
-                perimeter: +d.PERIMETR,
-                smooth: +d.SMOOTH,
-                concave: +d.CONCV,
-                symmetry: +d.SYMM,
-                fract: +d.FRACT_D,
+                Area: +d.AREA,
+                Texture: +d.TEXTURE,
+                Perimeter: +d.PERIMETR,
+                Smooth: +d.SMOOTH,
+                Concave: +d.CONCV,
+                Symmetry: +d.SYMM,
+                Fractal_Dimension: +d.FRACT_D,
                 sarea: +d.SAREA,
                 sfract: +d.SFRACT_D,
                 CHEMO: d.CHEMO,
@@ -61,22 +71,19 @@
     );
 
 </script>
-<div id="pc1" class="parcoords" style="width:1000px;height:300px"></div>
 
-<svg width="650" height="400" id="patientdisp"></svg>
-
-<svg width="400" height="600" id="cancerdisp"></svg>
-
-<p id="overviewDavid">Click on the checkboxes to </p>
-<label id="chemo1"><input type="checkbox">Highlight patients who received 1st round of Chemotherapy</label>
-<br>
-<label id="died"><input type="checkbox">Highlight deaths due to cancer</label>
-<br>
-<label id="survivalTime"><input type="checkbox">Fill in patients by survival time - lighter is survived longer</label>
-
-<p id="directions">Click on a person to sort by Survival Time. Please wait until each action is completed before clicking another box <br> <br>
-    Mouse over to display survival time</p>
-
+<h1>Using cellular features to predict breast cancer prognoses</h1>
+<table align="center" width="900" border="0" cellpadding = "5">
+    <tr><div id="pc1" class="parcoords center" style="width:900px;height:200px"></div></tr>
+    <tr><br> 
+        <td><center><img src = "bclegend.png" width = "350"/></center></td>
+        <td><center><img src = "cellpiclegend.png" width = "250"/></center></td>
+    </tr>
+    <tr>
+        <td valign="top"><svg width="480" height="600" id="patientdisp"></svg></td>
+        <td valign="top"><svg width="400" height="600" id="cancerdisp"></svg></td>
+    </tr>
+</table>
 
 <script src="parallelcoords2.js"></script>
 <script src="davidScripts.js"></script>
