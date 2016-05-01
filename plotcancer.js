@@ -1,13 +1,13 @@
 var controlslides = {
-    c1: {s1: 50000, m1: 10},
-    c2: {s2: 10000, m2: 10},
-    c3: {s3: 5000, m3: 10}
+    c1: {s1: 20000, m1: 10},
+    c2: {s2: 8000, m2: 10},
+    c3: {s3: 1000, m3: 10}
 };
 
 // Generate plot 
 var scalearea = d3.scale.linear()
     .domain([200, 3500])
-    .range([500, 50000]);
+    .range([500, 20000]);
 var scalefract = d3.scale.linear()
     .domain([0, 0.125])
     .range([0, 30]);
@@ -47,7 +47,7 @@ var plotCells = function(globalData)
         .attr("transform", function(d) {
                 return "translate("+
                 //(580-d[1]*150)+","+(200+d[1]*100)+
-                (200)+","+(200+d[1]*125)+
+                (200)+","+(130+d[1]*85)+
                 ")"
             })
         .attr("id", function(d) {return d[0];})
@@ -63,27 +63,27 @@ var plotCells = function(globalData)
 
     cancerdispd3.append("text")
         .attr("id", "labeltext")
-        .attr("x", function(d) { return 170; })
+        .attr("x", function(d) { return 80; })
         .attr("font-family", "sans-serif")
         .attr("y", function(d) {
-            return (180+d[1]*125);
+            return (110+d[1]*85);
             })
         .attr("font-size", "14px")
         .text(function(d) {
             if(d[1] == 0)
-                return "-2Z";
+                return "+2Z";
             else if(d[1] == 1)
                 return "median";
             else if(d[1] == 2)
-                return "+2Z";
+                return "-2Z";
         });
 
     cancerdispd3.append("text")
         .attr("id", "dyntext")
         .attr("font-family", "sans-serif")
-        .attr("x", function(d) { return 160; })
+        .attr("x", function(d) { return 165; })
         .attr("y", function(d) {
-            return (220+d[1]*125);
+            return (130+d[1]*85);
             })
         .attr("font-size", "12px")
         .text(function(d) { return formatcelltext(d, "s")+" | "+formatcelltext(d, "m");
