@@ -46,10 +46,14 @@ We also originally wanted to have the user be able to choose what they wanted th
 ## Development Process
 
 * Breakdown of how work was split among group members:
-  * **James** created the idealized cell representation component to visually represent the variance and mean cell areas and fractal dimensions of the selected patients, which involved figuring out various methods of pulling in data, performing calculations, and updating in real time a visual representation of the cell. He also did the bulk of the work integrating all of our code sets together into one functional visualizaion. 
+  * **James** created the idealized cell representation component to visually represent the variance and mean cell areas and fractal dimensions of the selected patients, which involved figuring out various methods of pulling in data, performing calculations, and updating in real time a visual representation of the cell. He also did the bulk of the work integrating all of our code sets together into one functional visualization. 
   * **David** began data visualization and patient characteristic identification in Tableau prior to visualization design. David worked on creating the picture representations of patients that were visualized. He initially implemented a version with checkboxes allowing for highlighting via different characteristics, and sorting via clicking on patients, but this was subsequently abandoned to allow for more effective integration. He implemented the highlightable cursor over patients characterizing their survival time. 
-  * **Shirley** applied different capabilties of the parallel coordinates library to create the re-ordable, colored, and interactive components of the parallel coordinates component. She also got the brushing on the parallel coordinates to talk to the other components, helped sort the pictorial patients based on the clicked parallel axis, and put together the final html page. 
+  * **Shirley** applied different capabilties of the parallel coordinates library to create the re-ordable, colored, and interactive components of the parallel coordinates component. She also got the brushing on the parallel coordinates to talk to the other components, helped sort the pictorial patients based on the clicked parallel axis, and put together the final html page.
   * All 3 of us put together this writeup. 
+
+* Libraries used:
+  * [Parallel Coordinates Library](https://syntagmatic.github.io/parallel-coordinates/) by Kai Chang
+  * [Superformula Plugin](https://github.com/d3/d3-plugins/tree/master/superformula) by Christophe Viau
 
 * Time spent developing our application:
   * All 3 of us spent a couple hours deciding on which dataset to use and doing data exploration in Tableau on the dataset we finally decided on. 
