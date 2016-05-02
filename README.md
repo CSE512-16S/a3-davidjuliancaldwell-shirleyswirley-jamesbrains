@@ -15,15 +15,15 @@ Cancer is a leading cause of death worldwide. The WHO estimates that 8.2 million
 
 Dr. Wolberg from the University of Wisconsin, and Professor Olvi Mangasarian from the University of Wisconsin collaborated and collected breast mass tissue from fine needle aspiration. (http://pages.cs.wisc.edu/~olvi/uwmp/cancer.html) Visual characteristics such as radius, area, and others were assessed. A dataset was compiled and curated for patients, with diagnostic data to assess new cases, as well as prognostic data (disease free survival time, recurrence) with metrics assessing these histological samples across time. The idea was for experts in machine learning approaches to be able apply their techniques to be able to more accurately diagnosis patients, as well as to predict long term survival and recurrence.
 
-We decided that this would be a fun data set to visualize because of the possibilities for interesting pictorial representations of patients and cells, in addition to the fact that the data itself are very well-curated and complete.
+We decided that this would be a fun data set to visualize because of the possibilities for interesting pictorial representations of patients and cells, in addition to the fact that the data itself are very well-curated and complete. 
 
-Our final visualization has 3 components, which all talk to each other. At the top, we have a parallel coordinates chart with lines (each corresponding to a different patient) colored by z-score according to the clicked/bolded axis as well as reorderable and brushable axes.
+Our final visualization has 3 components, which all talk to each other. At the top, we have a parallel coordinates chart with lines (each corresponding to a different patient) colored by z-score according to the clicked/bolded axis as well as reorderable and brushable axes. 
 
 Brushed data is then sent to our second component, which is a pictorial representation of patient's cells (in particular, their area and fractal dimension).In this idealized represntation of patient cells, the cell in the middle encodes the median cell area and fractal dimension of the brush-selected patients, while the cells on either side of it encode the median individual standard deviations of cell area and fractal dimension among the same brush-selected patients (minus 2 z-scores on the left, plus 2 z-scores on the right).     
 
 The brushed data is also sent to our third component, which is a pictorial representation of brush-selected patients. The patients are ascendingly sorted by the clicked/bolded parallel coordinate axis. Their fill color encodes their survival time, while their outline color encodes whether they underwent chemotherapy or not. 
 
-Our 3 components together help us to understand how observed cell properties are related to one another as well as to the prognostic survival time.  
+Our 3 components together help us to understand how observed cell properties are related to one another as well as to the prognostic survival time.  We decided that a parallel coordinate scheme would allow for effective interaction with the multidimensional data comprised by the cancer cell attributes. By being able to brush on this graph, users then obtain immediate feedback on what these cancer cells roughly look like, beyond simple numbers on a screen. Through this we hope to convey the different cell characteristics and shapes contained within this dataset. By then having pictorial representations of patients, colorcoded by chemotherapy and shaded by survival time, we hope to convey the human representations of these cell characteristics. So often, health data is abstracted behind walls of tables and statistics. By visualizing each individual that falls within a set of cellular characteristics, and having an encoding of their survival time, as well as treatment status, we hope to personalize the dataset to the user. This also allows for a quick assessment and envisioning of the number of patients with a certain set of cell characteristics, as well as the overall proportions of chemotherapy given and the survival time profiles. 
 
 ## Running Instructions
 
@@ -41,7 +41,7 @@ Along the way, there was a period of time where we had abandoned this idea becau
 
 In the end, we persevered and figured out how to get parallel coordinates brushing able to send the brushed data to our other components, so we were able to stick to our original plan. 
 
-We also originally wanted to have the user be able to choose what they wanted the pictorial patients to be colored and/or outlined by, which we got working in the stand-alone component, but did not end up integrating into the final full visualization.   
+We also originally wanted to have the user be able to choose what they wanted the pictorial patients to be colored and/or outlined by, which we got working in the stand-alone component, but did not end up integrating into the final full visualization. It was decided that it would be more cohesive to have three integrated parts, rather than disparate parts on the same page.    
 
 ## Development Process
 
